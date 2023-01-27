@@ -29,7 +29,7 @@ public:
 	
 	~Entity();
 
-
+	int i = 3;
 	//add a component to this entity
 	void AddComponent(Component* component);
 
