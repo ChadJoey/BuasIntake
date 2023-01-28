@@ -12,15 +12,14 @@
 namespace Tmpl8
 {
 	CollisionManager* collisionMan = new CollisionManager;
+
 	Game::Game()
 	{
-		auto cm = new CollisionManager();
-
 		Entity player;
 		player.AddComponent(new TransformComponent());
 		player.AddComponent(new PlayerComponent);
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
-		player.AddComponent(new ColliderComponent(cm));
+		player.AddComponent(new ColliderComponent(*collisionMan));
 		player.GetComponent<SpriteComponent>()->SetFrame(0);
 		entities.push_back(std::move(player));
 	}

@@ -1,21 +1,21 @@
 #pragma once
 #include "Component.h"
 #include "TransformComponent.h"
+#include "SpriteComponent.h"
 #include "CollisionManager.h"
 class ColliderComponent : public Component
 {
 public:
-	ColliderComponent(CollisionManager* cm);
-	struct rect
-	{
-		int ID;
-		Tmpl8::vec2 pos;
-		Tmpl8::vec2 size;
-		Tmpl8::vec2 velocity;
-	};
-	rect r;
+	ColliderComponent(const CollisionManager& cm) :
+	cm(cm)
+	{}
 
-	void GenerateCollisionData();
+	CollisionManager::rect r = {id, {0.0f, 0.0f},{0.0f, 0.0f},{0.0f, 0.0f} };
+
+
+	void Init(Entity& entity) override;
+
+	void GenerateCollisionData(Entity& entity, CollisionManager* cm);
 
 
 	//update the component
@@ -29,5 +29,10 @@ public:
 
 protected:
 private:
+	int id;
+	//Tmpl8::vec2 pos;
+	//Tmpl8::vec2 size;
+
+	CollisionManager cm;
 };
 
