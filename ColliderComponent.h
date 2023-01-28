@@ -13,14 +13,12 @@ public:
 		Tmpl8::vec2 velocity;
 	};
 	rect r;
-	virtual void Init(Entity& entity) override;
-
 
 	//update the component
-	virtual void Update(Entity& entity) override;
-	
+	void Update(Entity& entity) override;
 
-	virtual void Render(Entity& entity, Tmpl8::Surface& screen) override;
+
+	void Render(Entity& entity, Tmpl8::Surface& screen) override;
 
 
 	

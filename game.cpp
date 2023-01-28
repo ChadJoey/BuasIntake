@@ -1,11 +1,6 @@
 #include "game.h"
 #include "surface.h"
 
-#include "SpriteComponent.h"
-#include "PlayerComponent.h"
-#include "TransformComponent.h"
-#include "ColliderComponent.h"
-
 #include "Timer.h";
 #include <iostream>
 
@@ -25,7 +20,7 @@ namespace Tmpl8
 		player.AddComponent(new TransformComponent());
 		player.AddComponent(new PlayerComponent);
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
-		player.AddComponent(new ColliderComponent());
+		//player.AddComponent(new ColliderComponent());
 		player.GetComponent<SpriteComponent>()->SetFrame(0);
 		entities.push_back(std::move(player));
 	}
