@@ -36,7 +36,6 @@ public:
 private:
 	Surface* screen;
 	Entity* player = nullptr;
-
 	std::vector<Entity> entities;
 };
 

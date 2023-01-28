@@ -1,6 +1,11 @@
 #include "ColliderComponent.h"
 
 
+ColliderComponent::ColliderComponent(CollisionManager* cm)
+{
+
+}
+
 void ColliderComponent::Update(Entity& entity)
 {
 

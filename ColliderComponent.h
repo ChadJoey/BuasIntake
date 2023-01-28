@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
 #include "TransformComponent.h"
+#include "CollisionManager.h"
 class ColliderComponent : public Component
 {
 public:
-	ColliderComponent();
+	ColliderComponent(CollisionManager* cm);
 	struct rect
 	{
 		int ID;
@@ -13,6 +14,9 @@ public:
 		Tmpl8::vec2 velocity;
 	};
 	rect r;
+
+	void GenerateCollisionData();
+
 
 	//update the component
 	void Update(Entity& entity) override;
