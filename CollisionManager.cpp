@@ -87,6 +87,9 @@ bool CollisionManager::RayVsRect(const Tmpl8::vec2& ray_origin, const Tmpl8::vec
 }
 
 
+
+
+
 void CollisionManager::Update()
 {
 	Tmpl8::vec2 cp, cn;

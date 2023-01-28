@@ -25,10 +25,17 @@ void PlayerComponent::Update(Entity& entity)
 
 	double x = 0.0f;
 	if (right)
+	{
 		x += speedX * delta;
+		sprite->SetFrame(4);
+	}
+	
 	
 	if (left)
+	{
 		x -= speedX * delta;
+		sprite->SetFrame(0);
+	}
 	
 	
 	transform->AddPosition({ static_cast<float>(x) , 0 });
@@ -74,17 +81,20 @@ void PlayerComponent::Render(Entity& entity, Tmpl8::Surface& screen)
 void PlayerComponent::KeyDown(Entity& entity, const SDL_Scancode key)
 {
 	TransformComponent* transform = entity.GetComponent<TransformComponent>();
+	SpriteComponent* sprite = entity.GetComponent<SpriteComponent>();
 	switch (key)
 	{
 	case SDL_SCANCODE_D:
 	case SDL_SCANCODE_RIGHT:
 		left = false;
 		right = true;
+		
 		break;
 	case SDL_SCANCODE_A:
 	case SDL_SCANCODE_LEFT:
 		right = false;
 		left = true;
+		
 		break;
 	}
 }

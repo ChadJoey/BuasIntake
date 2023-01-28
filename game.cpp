@@ -20,8 +20,16 @@ namespace Tmpl8
 		player.AddComponent(new PlayerComponent);
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
 		player.AddComponent(new ColliderComponent(*collisionMan));
-		player.GetComponent<SpriteComponent>()->SetFrame(0);
+
 		entities.push_back(std::move(player));
+
+		Entity platform;
+		platform.AddComponent(new TransformComponent());
+		platform.GetComponent<TransformComponent>()->SetPosition({ 40.f,600.0f });
+		platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"),4));
+		platform.AddComponent(new ColliderComponent(*collisionMan));
+
+		entities.push_back(std::move(platform));
 	}
 
 
@@ -88,7 +96,7 @@ namespace Tmpl8
 		Timer::Get().Tick();
 		screen->Clear(0);
 
-		screen->Line(0, 10, 800, 10, 0xff);
+		//screen->Line(0, 10, 800, 10, 0xff);
 
 		//convert deltaTime to seconds
 		for (auto& e : entities)
