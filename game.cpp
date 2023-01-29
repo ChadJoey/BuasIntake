@@ -14,13 +14,13 @@ namespace Tmpl8
 
 	Game::Game()
 	{
-		player = new Entity;
-		player->AddComponent(new TransformComponent());
-		player->AddComponent(new PlayerComponent);
-		player->AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
-		player->AddComponent(new ColliderComponent(*player));
+		Entity player;
+		player.AddComponent(new TransformComponent());
+		player.AddComponent(new PlayerComponent);
+		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
+		player.AddComponent(new ColliderComponent(player));
 
-		entities.push_back(std::move(*player));
+		entities.push_back(std::move(player));
 
 		Entity platform;
 		platform.AddComponent(new TransformComponent());
@@ -110,14 +110,6 @@ namespace Tmpl8
 			e.Render(*screen);
 		}
 
-
-		for (auto& e : entities)
-		{
-			if (player->GetComponent<ColliderComponent>()->Collision(*player, e))
-			{
-				std::cout << "please";
-			}
-		}
 
 
 

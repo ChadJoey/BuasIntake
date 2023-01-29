@@ -125,7 +125,7 @@ void PlayerComponent::CollidesWith(const Entity& player, const Entity& object) c
 	TransformComponent* tMe = player.GetComponent<TransformComponent>();
 	TransformComponent* tObject = object.GetComponent<TransformComponent>();
 
-
+	
 
 }
 

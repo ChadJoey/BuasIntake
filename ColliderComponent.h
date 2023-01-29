@@ -2,6 +2,10 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
+
+
+
+
 class ColliderComponent : public Component
 {
 public:
@@ -10,10 +14,15 @@ public:
 	{
 	}
 
-	float top();
-	float bottom();
-	float left();
-	float right();
+	struct rect
+	{
+		float posX;
+		float posY;
+		float width;
+		float height;
+	};
+
+
 
 	void Init(Entity& entity) override;
 
@@ -28,12 +37,13 @@ public:
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;
 
 
-	
 
+	rect box{ 0,0,0,0};
 protected:
 private:
 
 	Entity& entity;
+
 
 };
 
