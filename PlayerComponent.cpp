@@ -16,6 +16,7 @@ PlayerComponent::PlayerComponent() :
 float y = 400;
 
 
+
 void PlayerComponent::Update(Entity& entity)
 {
 	TransformComponent* transform = entity.GetComponent<TransformComponent>();
@@ -114,5 +115,23 @@ void PlayerComponent::KeyUp(Entity& entity, SDL_Scancode key)
 		break;
 	}
 }
+
+
+
+
+
+void PlayerComponent::CollidesWith(const Entity& player, const Entity& object) const
+{
+	TransformComponent* tMe = player.GetComponent<TransformComponent>();
+	TransformComponent* tObject = object.GetComponent<TransformComponent>();
+
+
+
+}
+
+
+
+
+
 
 

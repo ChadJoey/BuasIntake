@@ -11,23 +11,22 @@
 
 namespace Tmpl8
 {
-	CollisionManager* collisionMan = new CollisionManager;
 
 	Game::Game()
 	{
-		Entity player;
-		player.AddComponent(new TransformComponent());
-		player.AddComponent(new PlayerComponent);
-		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
-		player.AddComponent(new ColliderComponent(*collisionMan));
+		player = new Entity;
+		player->AddComponent(new TransformComponent());
+		player->AddComponent(new PlayerComponent);
+		player->AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
+		player->AddComponent(new ColliderComponent(*player));
 
-		entities.push_back(std::move(player));
+		entities.push_back(std::move(*player));
 
 		Entity platform;
 		platform.AddComponent(new TransformComponent());
 		platform.GetComponent<TransformComponent>()->SetPosition({ 40.f,600.0f });
 		platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"),4));
-		platform.AddComponent(new ColliderComponent(*collisionMan));
+		platform.AddComponent(new ColliderComponent(platform));
 
 		entities.push_back(std::move(platform));
 	}
@@ -48,7 +47,7 @@ namespace Tmpl8
 	}
 
 
-
+	
 
 	void Game::MouseUp(int button)
 	{
@@ -102,12 +101,25 @@ namespace Tmpl8
 		for (auto& e : entities)
 		{
 			e.Update();
+
+			
 		}
 
 		for (auto& e : entities)
 		{
 			e.Render(*screen);
 		}
+
+
+		for (auto& e : entities)
+		{
+			if (player->GetComponent<ColliderComponent>()->Collision(*player, e))
+			{
+				std::cout << "please";
+			}
+		}
+
+
 
 	}
 };

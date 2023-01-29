@@ -223,7 +223,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ColliderComponent.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="game.cpp" />
@@ -236,7 +235,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColliderComponent.h" />
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="game.h" />

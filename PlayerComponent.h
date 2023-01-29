@@ -24,7 +24,7 @@ public:
 	}
 
 
-
+	void CollidesWith(const Entity& player, const Entity& object) const;
 
 
 
@@ -38,6 +38,7 @@ public:
 
 	//a key is let go
 	virtual void KeyUp(Entity& entity, SDL_Scancode key) override;
+	float velY = 0.0f;
 
 
 
@@ -53,7 +54,6 @@ private:
 	Timer& timer;
 	//pixels per second
 	float speedX = 100.0f;
-	float velY = 0.0f;
 	float gravity = 100.0f;
 
 	bool right = false;

@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "Entity.h"
-#include "CollisionManager.h"
 #include "PlayerComponent.h"
 #include "TransformComponent.h"
 #include "ColliderComponent.h"
@@ -35,6 +34,8 @@ public:
 	void KeyDown(SDL_Scancode key);
 private:
 	Surface* screen;
+
+	Entity* player = nullptr;
 	std::vector<Entity> entities;
 };
 

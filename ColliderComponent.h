@@ -2,20 +2,23 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
-#include "CollisionManager.h"
 class ColliderComponent : public Component
 {
 public:
-	ColliderComponent(const CollisionManager& cm) :
-	cm(cm)
-	{}
+	ColliderComponent(Entity& entity) :
+	entity(entity)
+	{
+	}
 
-	CollisionManager::rect r = {id, {0.0f, 0.0f},{0.0f, 0.0f},{0.0f, 0.0f} };
-
+	float top();
+	float bottom();
+	float left();
+	float right();
 
 	void Init(Entity& entity) override;
 
-	void GenerateCollisionData(Entity& entity, CollisionManager* cm);
+
+	bool Collision(Entity& entityA, Entity& entityB);
 
 
 	//update the component
@@ -29,10 +32,8 @@ public:
 
 protected:
 private:
-	int id;
-	//Tmpl8::vec2 pos;
-	//Tmpl8::vec2 size;
 
-	CollisionManager cm;
+	Entity& entity;
+
 };
 

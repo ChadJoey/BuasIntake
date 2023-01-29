@@ -14,7 +14,6 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,7 +31,6 @@
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="CollisionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
