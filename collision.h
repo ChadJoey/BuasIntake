@@ -3,7 +3,7 @@
 class collision
 {
 public:
-	bool AABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB);
-	bool AABB(ColliderComponent& colA, ColliderComponent& colB);
+	static bool AABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB);
+	static bool AABB(ColliderComponent* colA, ColliderComponent* colB);
 };
 

@@ -16,10 +16,10 @@ public:
 
 	struct rect
 	{
-		float posX;
-		float posY;
-		float width;
-		float height;
+		float left;
+		float bottom;
+		float top;
+		float right;
 	};
 
 

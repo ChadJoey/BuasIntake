@@ -19,15 +19,15 @@ void ColliderComponent::Update(Entity& entity)
 	auto* s = entity.GetComponent<SpriteComponent>();
 
 
-	box.height = t->GetPosition().y + s->GetHeight();
-	box.width = t->GetPosition().x + s->GetWidth();
-	box.posX = t->GetPosition().x;
-	box.posY = t->GetPosition().y;
+	box.bottom = t->GetPosition().y + s->GetHeight();
+	box.right = t->GetPosition().x + s->GetWidth();
+	box.left = t->GetPosition().x;
+	box.top = t->GetPosition().y;
 }
 
 void ColliderComponent::Render(Entity& entity, Tmpl8::Surface& screen)
 {
 	auto* transform = entity.GetComponent<TransformComponent>();
 	auto* sprite = entity.GetComponent<SpriteComponent>();
-	screen.Box(transform->GetPosition().x, transform->GetPosition().y, transform->GetPosition().x + sprite->GetWidth(), transform->GetPosition().y + sprite->GetHeight(), 0xff);
+	screen.Box(box.left, box.top,box.right,box.bottom, 0xff);
 }

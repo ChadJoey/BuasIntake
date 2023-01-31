@@ -1,6 +1,6 @@
 #include "game.h"
 #include "surface.h"
-
+#include "collision.h"
 #include "Timer.h";
 #include <iostream>
 
@@ -25,10 +25,19 @@ namespace Tmpl8
 		Entity platform;
 		platform.AddComponent(new TransformComponent());
 		platform.GetComponent<TransformComponent>()->SetPosition({ 40.f,600.0f });
-		platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"),4));
+		platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
 		platform.AddComponent(new ColliderComponent(platform));
 
 		entities.push_back(std::move(platform));
+
+		Entity platform2;
+		platform2.AddComponent(new TransformComponent());
+		platform2.GetComponent<TransformComponent>()->SetPosition({ 100.f,400.0f });
+		platform2.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
+		platform2.AddComponent(new ColliderComponent(platform2));
+
+		entities.push_back(std::move(platform2));
+
 	}
 
 
@@ -95,19 +104,23 @@ namespace Tmpl8
 		Timer::Get().Tick();
 		screen->Clear(0);
 
-		//screen->Line(0, 10, 800, 10, 0xff);
-
 		//convert deltaTime to seconds
 		for (auto& e : entities)
 		{
 			e.Update();
-
-			
 		}
 
 		for (auto& e : entities)
 		{
 			e.Render(*screen);
+		}
+
+		for (int i = 1; i < entities.size(); i++)
+		{
+			if (collision::AABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
+			{
+				std::cout << "yeet";
+			}
 		}
 
 

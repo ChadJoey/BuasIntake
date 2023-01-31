@@ -34,7 +34,6 @@ public:
 	void KeyDown(SDL_Scancode key);
 private:
 	Surface* screen;
-
 	std::vector<Entity> entities;
 };
 

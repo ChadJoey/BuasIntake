@@ -2,11 +2,11 @@
 
 bool collision::AABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
 {
-	return(rectA.posX + rectA.width >= rectB.posX && rectB.posX + rectB.width >= rectA.posX &&
-		rectA.posY + rectA.height >= rectB.posY && rectB.posY + rectB.height >= rectA.posY);
+	return(rectA.right > rectB.left && rectA.left < rectB.right && rectA.bottom > rectB.top &&
+		rectA.top < rectB.bottom);
 }
 
-bool collision::AABB(ColliderComponent& colA, ColliderComponent& colB)
+bool collision::AABB(ColliderComponent* colA, ColliderComponent* colB)
 {
-	return AABB(colA.box, colB.box);
+	return AABB(colA->box, colB->box);
 }
