@@ -20,14 +20,16 @@ public:
 		float bottom;
 		float top;
 		float right;
+
+		float leftOffset = 0;
+		float bottomOffset = 0;
+		float topOffset = 0;
+		float rightOffset = 0;
 	};
 
-
+	void SetOffset(float leftOffset, float bottomOffset, float topOffset, float rightOffset);
 
 	void Init(Entity& entity) override;
-
-
-	bool Collision(Entity& entityA, Entity& entityB);
 
 
 	//update the component
@@ -36,13 +38,12 @@ public:
 
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;
 
-
+	Entity& GetEntity();
 
 	rect box{ 0,0,0,0};
 protected:
-private:
-
 	Entity& entity;
+private:
 
 
 };

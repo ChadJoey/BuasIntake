@@ -13,7 +13,7 @@ PlayerComponent::PlayerComponent() :
 }
 
 
-float y = 400;
+float y = 300;
 
 
 
@@ -55,15 +55,12 @@ void PlayerComponent::Update(Entity& entity)
 
 	if (y > (ScreenHeight - sprite->GetHeight()))
 	{
-		velY = -velY;
+
 		y = ScreenHeight - sprite->GetHeight();
 	}
 
 	//update position
 	transform->SetPosition({ transform->GetPosition().x, (y)});
-
-
-
 
 
 	//------------------------------------------------------------------------
@@ -116,17 +113,16 @@ void PlayerComponent::KeyUp(Entity& entity, SDL_Scancode key)
 	}
 }
 
-
-
+void PlayerComponent::flipVelocity()
+{
+	velY = -velY - 1;
+}
 
 
 void PlayerComponent::CollidesWith(const Entity& player, const Entity& object) const
 {
 	TransformComponent* tMe = player.GetComponent<TransformComponent>();
 	TransformComponent* tObject = object.GetComponent<TransformComponent>();
-
-	
-
 }
 
 

@@ -227,6 +227,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="PlatformComponent.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="surface.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="PlatformComponent.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="surface.h" />

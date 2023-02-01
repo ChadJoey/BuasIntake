@@ -3,7 +3,6 @@
 #include "collision.h"
 #include "Timer.h";
 #include <iostream>
-
 #include <cstdio> //printf
 
 
@@ -19,6 +18,8 @@ namespace Tmpl8
 		player.AddComponent(new PlayerComponent);
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
 		player.AddComponent(new ColliderComponent(player));
+		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
+
 
 		entities.push_back(std::move(player));
 
@@ -32,7 +33,7 @@ namespace Tmpl8
 
 		Entity platform2;
 		platform2.AddComponent(new TransformComponent());
-		platform2.GetComponent<TransformComponent>()->SetPosition({ 100.f,400.0f });
+		platform2.GetComponent<TransformComponent>()->SetPosition({ 100.f,370.0f });
 		platform2.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
 		platform2.AddComponent(new ColliderComponent(platform2));
 
@@ -117,14 +118,27 @@ namespace Tmpl8
 
 		for (int i = 1; i < entities.size(); i++)
 		{
-			if (collision::AABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
+			if (collision::OneWayAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
 			{
-				std::cout << "yeet";
+
+				if (entities[0].GetComponent<PlayerComponent>()->velY >= 0)
+				{
+					currentPlatform = i;
+					if (lastTouchedPlatform != 0 && currentPlatform != lastTouchedPlatform)
+					{
+						movePlat = true;
+					}
+					lastTouchedPlatform = i;
+					entities[0].GetComponent<PlayerComponent>()->flipVelocity();
+				}
 			}
 		}
-
-
-
-
+		if (movePlat)
+		{
+			movePlat = false;
+		}
 	}
+
+
+
 };

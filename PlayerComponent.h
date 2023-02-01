@@ -38,9 +38,12 @@ public:
 
 	//a key is let go
 	virtual void KeyUp(Entity& entity, SDL_Scancode key) override;
+
+
+	void flipVelocity();
+
+
 	float velY = 0.0f;
-
-
 
 
 
@@ -55,6 +58,7 @@ private:
 	//pixels per second
 	float speedX = 100.0f;
 	float gravity = 100.0f;
+	float maxVelY = -220;
 
 	bool right = false;
 	bool left = false;

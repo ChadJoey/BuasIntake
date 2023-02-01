@@ -32,8 +32,14 @@ public:
 	void MouseMove(int x, int y);
 	void KeyUp(SDL_Scancode key);
 	void KeyDown(SDL_Scancode key);
+
 private:
+
 	Surface* screen;
+
+	int lastTouchedPlatform = 0;
+	int currentPlatform;
+	bool movePlat = false;
 	std::vector<Entity> entities;
 };
 

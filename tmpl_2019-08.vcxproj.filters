@@ -16,6 +16,7 @@
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="PlatformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="PlatformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
