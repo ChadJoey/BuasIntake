@@ -24,8 +24,6 @@ public:
 	}
 
 
-	void CollidesWith(const Entity& player, const Entity& object) const;
-
 
 
 	void Update(Entity& entity) override;
@@ -40,15 +38,17 @@ public:
 	virtual void KeyUp(Entity& entity, SDL_Scancode key) override;
 
 
+	void Wrap(Entity& entity);
+
 	void flipVelocity();
 
 
 	float velY = 0.0f;
+	float yOffset = 0.0f;
 
 
 
-
-
+	float y = 300;
 
 
 protected:

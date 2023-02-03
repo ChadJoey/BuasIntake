@@ -9,12 +9,13 @@
 
  void SpriteComponent::Render(Entity& entity, Tmpl8::Surface& screen)
  {
-	 const TransformComponent* transform = entity.GetComponent<TransformComponent>();
+	 const auto transform = entity.GetComponent<TransformComponent>();
 	 RenderObject renderObject(transform->GetPosition(), sprite, &screen);
 
 
 	 sprite.Draw(renderObject.dst, static_cast<int>(renderObject.pos.x),
 		 static_cast<int>(renderObject.pos.y));
+;
 
  }
 

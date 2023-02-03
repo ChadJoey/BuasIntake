@@ -100,10 +100,13 @@ namespace Tmpl8
 		}
 	}
 
+	Sprite mainBackground(new Surface("assets/doodle/space-bck@2x.png"), 1);
+
 	void Game::Tick(float)
 	{
 		Timer::Get().Tick();
 		screen->Clear(0);
+		mainBackground.Draw(screen, 0, 0);
 
 		//convert deltaTime to seconds
 		for (auto& e : entities)
@@ -116,26 +119,27 @@ namespace Tmpl8
 			e.Render(*screen);
 		}
 
+		float posTest;
 		for (int i = 1; i < entities.size(); i++)
 		{
 			if (collision::OneWayAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
 			{
-
 				if (entities[0].GetComponent<PlayerComponent>()->velY >= 0)
 				{
-					currentPlatform = i;
-					if (lastTouchedPlatform != 0 && currentPlatform != lastTouchedPlatform)
-					{
-						movePlat = true;
-					}
-					lastTouchedPlatform = i;
 					entities[0].GetComponent<PlayerComponent>()->flipVelocity();
 				}
 			}
 		}
-		if (movePlat)
+
+		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y < 300)
 		{
-			movePlat = false;
+			auto pt = entities[0].GetComponent<PlayerComponent>();
+			pt->y = 300;
+			for (auto& e : entities)
+			{
+				auto et = e.GetComponent<TransformComponent>();
+				et->SetPosition({ et->GetPosition().x,et->GetPosition().y + platformSpeed * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
+			}
 		}
 	}
 

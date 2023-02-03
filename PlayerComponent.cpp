@@ -1,5 +1,6 @@
 #include "PlayerComponent.h"
 
+#include <iostream>
 #include <windows.h>
 
 #include "template.h"
@@ -13,7 +14,7 @@ PlayerComponent::PlayerComponent() :
 }
 
 
-float y = 300;
+float x = 0.0f;
 
 
 
@@ -24,7 +25,6 @@ void PlayerComponent::Update(Entity& entity)
 
 	const float delta = timer.GetElapsedSeconds();
 
-	double x = 0.0f;
 	if (right)
 	{
 		x += speedX * delta;
@@ -37,9 +37,6 @@ void PlayerComponent::Update(Entity& entity)
 		x -= speedX * delta;
 		sprite->SetFrame(0);
 	}
-	
-	
-	transform->AddPosition({ static_cast<float>(x) , 0 });
 
 
 	//---------------------------------------------------------------
@@ -52,7 +49,6 @@ void PlayerComponent::Update(Entity& entity)
 	velY += gravity * delta;
 	y += velY * delta;
 
-
 	if (y > (ScreenHeight - sprite->GetHeight()))
 	{
 
@@ -60,10 +56,12 @@ void PlayerComponent::Update(Entity& entity)
 	}
 
 	//update position
-	transform->SetPosition({ transform->GetPosition().x, (y)});
+	transform->SetPosition({x, y});
 
 
 	//------------------------------------------------------------------------
+
+	Wrap(entity);
 }
 
 
@@ -72,6 +70,19 @@ void PlayerComponent::Render(Entity& entity, Tmpl8::Surface& screen)
 
 }
 
+void PlayerComponent::Wrap(Entity& entity)
+{
+	auto pc = entity.GetComponent<ColliderComponent>();
+	if (ScreenWidth <= pc->box.left)
+	{
+		x = -50;
+	}
+	else if (pc->box.right <= 0)
+	{
+		x = ScreenWidth - 10;
+	}
+
+}
 
 
 
@@ -115,15 +126,9 @@ void PlayerComponent::KeyUp(Entity& entity, SDL_Scancode key)
 
 void PlayerComponent::flipVelocity()
 {
-	velY = -velY - 1;
+	velY = maxVelY;
 }
 
-
-void PlayerComponent::CollidesWith(const Entity& player, const Entity& object) const
-{
-	TransformComponent* tMe = player.GetComponent<TransformComponent>();
-	TransformComponent* tObject = object.GetComponent<TransformComponent>();
-}
 
 
 

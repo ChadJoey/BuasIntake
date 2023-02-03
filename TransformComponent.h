@@ -35,6 +35,11 @@ public:
 	{
 		return position;
 	}
+
+	void SetOffset(const Tmpl8::vec2 offset)
+	{
+		this->position += offset;
+	}
 	
 private:
 

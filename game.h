@@ -36,10 +36,7 @@ public:
 private:
 
 	Surface* screen;
-
-	int lastTouchedPlatform = 0;
-	int currentPlatform;
-	bool movePlat = false;
+	float platformSpeed = 300;
 	std::vector<Entity> entities;
 };
 

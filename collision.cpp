@@ -14,7 +14,7 @@ bool collision::AABB(ColliderComponent* colA, ColliderComponent* colB)
 bool collision::OneWayAABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
 {
 	//magic number i know cringe
-	if (rectA.bottom <= rectB.top + 5)
+	if (rectA.bottom <= rectB.top + 7)
 	{
 		return(rectA.right > rectB.left && rectA.left < rectB.right&& rectA.bottom > rectB.top &&
 		rectA.top < rectB.bottom);
