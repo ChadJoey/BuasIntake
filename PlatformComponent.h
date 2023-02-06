@@ -12,6 +12,7 @@ public:
 
 	void MovePlatform(Entity& entity, TransformComponent* t)
 	{
+		/*https://stackoverflow.com/questions/288739/generate-random-numbers-uniformly-over-an-entire-range*/
 		std::random_device                  rand_dev;
 		std::mt19937                        generator(rand_dev());
 		std::uniform_int_distribution<int>  genX(minpos.x, maxpos.x);
