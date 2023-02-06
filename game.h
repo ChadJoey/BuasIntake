@@ -6,6 +6,8 @@
 #include "TransformComponent.h"
 #include "ColliderComponent.h"
 #include "SpriteComponent.h"
+#include "PlatformComponent.h"
+
 
 #include "SDL_scancode.h"
 

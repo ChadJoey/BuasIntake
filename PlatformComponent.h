@@ -1,28 +1,30 @@
 #pragma once
+#include <random>
 #include "Component.h"
 #include "TransformComponent.h"
 
-class PlatformComponent : Component
+class PlatformComponent : public Component
 {
 public:
+	PlatformComponent() = default;
+	void Update(Entity& entity) override;
 
 
-	/*
-	 *for next time so i know what to do.
-	 *say 800 is the lowest point that the player reaches.
-	 *when the player hits a new platform this is called
-	 *this platform will need to move down to the lowest position in this case 800
-	 *the platform that was at 800 alrdy needs to move down out of screen
-	 *get the platform that was last hit and calculate the distance between this one and the one you are on now
-	 *that distance is the amount the platform needs to move down
-	 *
-	 */
-
-	void MovePlatform(Entity& entity)
+	void MovePlatform(Entity& entity, TransformComponent* t)
 	{
+		std::random_device                  rand_dev;
+		std::mt19937                        generator(rand_dev());
+		std::uniform_int_distribution<int>  genX(minpos.x, maxpos.x);
+		std::uniform_int_distribution<int>  genY(minpos.y, maxpos.y);
 
+		t->SetPosition({ static_cast<float>(genX(generator)), static_cast<float>(-genY(generator))});
 	}
+	
 
 private:
+
+	Tmpl8::vec2 maxpos = {ScreenWidth - 60,250};
+	Tmpl8::vec2 minpos = { 0, 0 };
+
 };
 

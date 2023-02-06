@@ -19,8 +19,6 @@ namespace Tmpl8
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 10));
 		player.AddComponent(new ColliderComponent(player));
 		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
-
-
 		entities.push_back(std::move(player));
 
 		Entity platform;
@@ -28,7 +26,7 @@ namespace Tmpl8
 		platform.GetComponent<TransformComponent>()->SetPosition({ 40.f,600.0f });
 		platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
 		platform.AddComponent(new ColliderComponent(platform));
-
+		platform.AddComponent(new PlatformComponent());
 		entities.push_back(std::move(platform));
 
 		Entity platform2;
@@ -36,15 +34,13 @@ namespace Tmpl8
 		platform2.GetComponent<TransformComponent>()->SetPosition({ 100.f,370.0f });
 		platform2.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
 		platform2.AddComponent(new ColliderComponent(platform2));
-
 		entities.push_back(std::move(platform2));
-
 	}
+
 
 
 	void Game::Init()
 	{
-
 		for (auto& e : entities)
 		{
 			e.Init();
