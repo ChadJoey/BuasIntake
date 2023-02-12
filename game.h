@@ -7,7 +7,9 @@
 #include "ColliderComponent.h"
 #include "SpriteComponent.h"
 #include "PlatformComponent.h"
-
+#include "Camera.h"
+#include "CameraController.h"
+#include "UI.h"
 
 #include "SDL_scancode.h"
 
@@ -18,6 +20,7 @@ class Game
 {
 public:
 	Game();
+	void GameStart();
 	~Game();
 	Game(const Game& copy) = delete;
 	Game& operator=(const Game& copy) = delete;
@@ -34,12 +37,17 @@ public:
 	void MouseMove(int x, int y);
 	void KeyUp(SDL_Scancode key);
 	void KeyDown(SDL_Scancode key);
+	int platformAmount = 12;
 
 private:
-
+	Camera* camera = nullptr;
+	CameraController* cameraControl = nullptr;
+	UI* ui = nullptr;
 	Surface* screen;
 	float platformSpeed = 300;
 	std::vector<Entity> entities;
+
+
 };
 
 }; // namespace Tmpl8

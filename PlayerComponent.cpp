@@ -25,6 +25,27 @@ void PlayerComponent::Update(Entity& entity)
 
 	const float delta = timer.GetElapsedSeconds();
 
+
+
+	if (sprite->GetFrame() == 4 && velY == maxVelY)
+	{
+		sprite->SetFrame(5);
+		x += speedX * delta;
+	}
+	else if (sprite->GetFrame() == 5 && velY >= -210)
+	{
+		sprite->SetFrame(4);
+	}
+
+	if (sprite->GetFrame() == 0 && velY == maxVelY)
+	{
+		sprite->SetFrame(1);
+	}
+	else if (sprite->GetFrame() == 1 && velY >= -210)
+	{
+		sprite->SetFrame(0);
+	}
+
 	if (right)
 	{
 		x += speedX * delta;

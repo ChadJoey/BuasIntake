@@ -20,7 +20,6 @@ public:
 	}
 
 	virtual void Update(Entity& entity) override;
-
 	void SetPosition(const Tmpl8::vec2& position)
 	{
 		this->position = position;
@@ -36,13 +35,19 @@ public:
 		return position;
 	}
 
-	void SetOffset(const Tmpl8::vec2 offset)
+	void SetOffset(Tmpl8::vec2 offset)
 	{
-		this->position += offset;
+		this->offset = offset;
 	}
+
+	Tmpl8::vec2 GetOffsetPos()
+	{
+		return position + offset;
+	}
+
 	
 private:
-
+	Tmpl8::vec2 offset;
 	Tmpl8::vec2 position;
 };
 

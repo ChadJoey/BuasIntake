@@ -13,6 +13,10 @@ namespace Tmpl8
 
 	Game::Game()
 	{
+		camera = new Camera();
+		cameraControl = new CameraController(camera);
+		ui = new UI(new Surface("assets/doodle/space-tiles.png"), screen);
+
 		Entity player;
 		player.AddComponent(new TransformComponent());
 		player.AddComponent(new PlayerComponent);
@@ -21,26 +25,40 @@ namespace Tmpl8
 		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
 		entities.push_back(std::move(player));
 
-		Entity platform;
-		platform.AddComponent(new TransformComponent());
-		platform.GetComponent<TransformComponent>()->SetPosition({ 40.f,600.0f });
-		platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
-		platform.AddComponent(new ColliderComponent(platform));
-		platform.AddComponent(new PlatformComponent());
-		entities.push_back(std::move(platform));
+		vec2 startingPos[12] = { {40.0f, 650.0f},
+			{120.0f, 500.0f} ,{400.0f, 480.0f}
+			,{250.0f, 200.0f} ,{350.0f, 350.0f}
+			,{600.0f, 150.0f} ,{550.0f, 700.0f},
+		{470.0f, 200.0f} ,{320, 00.0f} ,
+		{-100.0f, 0.0f} ,{-200.0f, 350.0f} ,{-400.0f, 350.0f} };
 
-		Entity platform2;
-		platform2.AddComponent(new TransformComponent());
-		platform2.GetComponent<TransformComponent>()->SetPosition({ 100.f,370.0f });
-		platform2.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
-		platform2.AddComponent(new ColliderComponent(platform2));
-		entities.push_back(std::move(platform2));
+		vec2 storagePos{-100, -100 };
+
+		for (size_t i = 0; i < platformAmount; i++)
+		{
+			Entity platform;
+			platform.AddComponent(new TransformComponent());
+			platform.GetComponent<TransformComponent>()->SetPosition({ startingPos[i] });
+			platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
+			platform.AddComponent(new ColliderComponent(platform));
+			platform.AddComponent(new PlatformComponent());
+			entities.push_back(std::move(platform));
+		}
+
+	}
+
+
+	void Game::GameStart()
+	{
+		UI::StartMenu();
 	}
 
 
 
 	void Game::Init()
 	{
+
+
 		for (auto& e : entities)
 		{
 			e.Init();
@@ -123,18 +141,25 @@ namespace Tmpl8
 				if (entities[0].GetComponent<PlayerComponent>()->velY >= 0)
 				{
 					entities[0].GetComponent<PlayerComponent>()->flipVelocity();
+
 				}
 			}
 		}
 
-		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y < 300)
+
+		
+
+		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y < 330)
 		{
+			cameraControl->SetPos({ 0, 350.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
 			auto pt = entities[0].GetComponent<PlayerComponent>();
-			pt->y = 300;
+			pt->y = 330;
 			for (auto& e : entities)
 			{
 				auto et = e.GetComponent<TransformComponent>();
-				et->SetPosition({ et->GetPosition().x,et->GetPosition().y + platformSpeed * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
+
+				et->SetOffset(cameraControl->GetPos());
+				et->SetPosition({et->GetOffsetPos()});
 			}
 		}
 	}

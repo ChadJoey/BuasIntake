@@ -66,6 +66,11 @@ public:
 
 	void SetFrame(unsigned int a_Index);
 
+	unsigned int GetFrame()
+	{
+		return sprite.GetFrame();
+	}
+
 	int GetWidth();
 
 	int GetHeight();
