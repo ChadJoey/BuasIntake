@@ -22,7 +22,5 @@ private:
 	Tmpl8::Surface* Surface;
 	Tmpl8::Surface* screen;
 
-
-
 };
 

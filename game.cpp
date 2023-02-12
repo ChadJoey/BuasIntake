@@ -13,9 +13,9 @@ namespace Tmpl8
 
 	Game::Game()
 	{
+		ui = new UI(new Surface("assets/doodle/space-menu.png"), screen);
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
-		ui = new UI(new Surface("assets/doodle/space-tiles.png"), screen);
 
 		Entity player;
 		player.AddComponent(new TransformComponent());
@@ -50,14 +50,14 @@ namespace Tmpl8
 
 	void Game::GameStart()
 	{
-		UI::StartMenu();
+		ui->StartMenu();
 	}
 
 
 
 	void Game::Init()
 	{
-
+		GameStart();
 
 		for (auto& e : entities)
 		{
@@ -133,7 +133,6 @@ namespace Tmpl8
 			e.Render(*screen);
 		}
 
-		float posTest;
 		for (int i = 1; i < entities.size(); i++)
 		{
 			if (collision::OneWayAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
