@@ -129,8 +129,6 @@ namespace Tmpl8
 		{
 			e.Render(*screen);
 		}
-
-		// just for seting etc
 		//check for collision
 		for (int i = 1; i < entities.size(); i++)
 		{
