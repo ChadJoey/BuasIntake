@@ -235,7 +235,6 @@
     <ClCompile Include="template.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
-    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColliderComponent.h" />
@@ -250,7 +249,6 @@
     <ClInclude Include="template.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="_readme.txt" />

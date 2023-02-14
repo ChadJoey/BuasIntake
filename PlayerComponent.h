@@ -1,5 +1,4 @@
 #pragma once
-#include "template.h"
 #include "Component.h"
 #include "TransformComponent.h"
 #include "Entity.h"
@@ -12,16 +11,6 @@ class PlayerComponent : public Component
 public:
 	PlayerComponent();
 
-	static const std::string& ID()
-	{
-		static std::string id = "PlayerComponent";
-		return id;
-	}
-
-	virtual const std::string& GetID()
-	{
-		return ID();
-	}
 
 
 
@@ -45,9 +34,6 @@ public:
 
 	float velY = 0.0f;
 	float yOffset = 0.0f;
-
-
-
 	float y = 300;
 
 

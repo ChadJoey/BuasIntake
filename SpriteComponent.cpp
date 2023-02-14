@@ -9,19 +9,18 @@
 
  void SpriteComponent::Render(Entity& entity, Tmpl8::Surface& screen)
  {
-	 const auto transform = entity.GetComponent<TransformComponent>();
-	 RenderObject renderObject(transform->GetPosition(), sprite, &screen);
+	 if (entity.isActive)
+	 {
+		 const auto transform = entity.GetComponent<TransformComponent>();
+		 RenderObject renderObject(transform->GetPosition(), sprite, &screen);
 
 
-	 sprite.Draw(renderObject.dst, static_cast<int>(renderObject.pos.x),
-		 static_cast<int>(renderObject.pos.y));
-;
+		 sprite.Draw(renderObject.dst, static_cast<int>(renderObject.pos.x),
+			 static_cast<int>(renderObject.pos.y));
+	 }
+
 
  }
-
-
-
-
 
 
 void SpriteComponent::SetFrame(unsigned a_Index)

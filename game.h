@@ -9,9 +9,9 @@
 #include "PlatformComponent.h"
 #include "Camera.h"
 #include "CameraController.h"
-#include "UI.h"
-
+#include "game.h"
 #include "SDL_scancode.h"
+
 
 namespace Tmpl8 {
 
@@ -20,7 +20,6 @@ class Game
 {
 public:
 	Game();
-	void GameStart();
 	~Game();
 	Game(const Game& copy) = delete;
 	Game& operator=(const Game& copy) = delete;
@@ -42,12 +41,8 @@ public:
 private:
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;
-	UI* ui = nullptr;
 	Surface* screen;
 	float platformSpeed = 300;
 	std::vector<Entity> entities;
-
-
 };
-
 }; // namespace Tmpl8

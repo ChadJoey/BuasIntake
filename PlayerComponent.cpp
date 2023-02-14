@@ -20,12 +20,16 @@ float x = 0.0f;
 
 void PlayerComponent::Update(Entity& entity)
 {
+	if (!entity.isActive)
+	{
+		return;
+	}
 	TransformComponent* transform = entity.GetComponent<TransformComponent>();
 	SpriteComponent* sprite = entity.GetComponent<SpriteComponent>();
 
 	const float delta = timer.GetElapsedSeconds();
 
-
+	
 
 	if (sprite->GetFrame() == 4 && velY == maxVelY)
 	{

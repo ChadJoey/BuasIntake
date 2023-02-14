@@ -63,7 +63,6 @@ public:
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;
 
 
-
 	void SetFrame(unsigned int a_Index);
 
 	unsigned int GetFrame()

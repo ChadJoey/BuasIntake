@@ -6,16 +6,16 @@
 #include <cstdio> //printf
 
 
-/* credit: https://www.youtube.com/watch?v=gKQd1qPQHgs&list=PLZHgukYvDo9cUYfUZZ6mtCrPnuX_4hRRl&index=8*/
 
+/* credit: https://www.youtube.com/watch?v=gKQd1qPQHgs&list=PLZHgukYvDo9cUYfUZZ6mtCrPnuX_4hRRl&index=8*/
 namespace Tmpl8
 {
 
 	Game::Game()
 	{
-		ui = new UI(new Surface("assets/doodle/space-menu.png"), screen);
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
+
 
 		Entity player;
 		player.AddComponent(new TransformComponent());
@@ -24,6 +24,7 @@ namespace Tmpl8
 		player.AddComponent(new ColliderComponent(player));
 		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
 		entities.push_back(std::move(player));
+
 
 		vec2 startingPos[12] = { {40.0f, 650.0f},
 			{120.0f, 500.0f} ,{400.0f, 480.0f}
@@ -48,16 +49,9 @@ namespace Tmpl8
 	}
 
 
-	void Game::GameStart()
-	{
-		ui->StartMenu();
-	}
-
-
 
 	void Game::Init()
 	{
-		GameStart();
 
 		for (auto& e : entities)
 		{
@@ -115,13 +109,16 @@ namespace Tmpl8
 	}
 
 	Sprite mainBackground(new Surface("assets/doodle/space-bck@2x.png"), 1);
+	Sprite startMenu(new Surface("assets/doodle/space-menu.png"), 1);
+
+	
 
 	void Game::Tick(float)
 	{
 		Timer::Get().Tick();
 		screen->Clear(0);
 		mainBackground.Draw(screen, 0, 0);
-
+		startMenu.Draw(screen, 0, 0);
 		//convert deltaTime to seconds
 		for (auto& e : entities)
 		{
@@ -133,21 +130,26 @@ namespace Tmpl8
 			e.Render(*screen);
 		}
 
+
+		//check for collision
 		for (int i = 1; i < entities.size(); i++)
 		{
+			if (!entities[i].GetComponent<ColliderComponent>())
+			{
+				return;
+			}
 			if (collision::OneWayAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
 			{
 				if (entities[0].GetComponent<PlayerComponent>()->velY >= 0)
 				{
 					entities[0].GetComponent<PlayerComponent>()->flipVelocity();
-
 				}
 			}
 		}
 
 
 		
-
+		//camera bounds
 		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y < 330)
 		{
 			cameraControl->SetPos({ 0, 350.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });

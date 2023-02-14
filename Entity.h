@@ -8,6 +8,8 @@
 
 /* credit: https://www.youtube.com/watch?v=gKQd1qPQHgs&list=PLZHgukYvDo9cUYfUZZ6mtCrPnuX_4hRRl&index=8*/
 
+
+
 class Component;
 
 namespace Tmpl8
@@ -33,6 +35,12 @@ public:
 
 	template<typename T>
 	T* GetComponent() const;
+
+
+	void SetActive(bool isActive)
+	{
+		this->isActive = isActive;
+	}
 
 
 	template<typename T>
@@ -64,10 +72,10 @@ public:
 	void MouseUp(int button);
 
 
+	bool isActive = true;
 protected:
 
 private:
-
 	std::unordered_multimap<std::type_index, Component*> components;
 };
 
