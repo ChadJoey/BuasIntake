@@ -25,12 +25,16 @@ public:
 		float bottomOffset = 0;
 		float topOffset = 0;
 		float rightOffset = 0;
+
+		float vx = 0;
+		float vy = 0;
 	};
 
 	void SetOffset(float leftOffset, float bottomOffset, float topOffset, float rightOffset);
 
 	void Init(Entity& entity) override;
 
+	void SetVelocity(float vx, float vy);
 
 	//update the component
 	void Update(Entity& entity) override;

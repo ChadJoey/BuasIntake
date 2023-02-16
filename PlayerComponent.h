@@ -35,6 +35,7 @@ public:
 	float velY = 0.0f;
 	float yOffset = 0.0f;
 	float y = 300;
+	float velX = 0;
 
 
 protected:
@@ -45,7 +46,9 @@ private:
 	float speedX = 100.0f;
 	float gravity = 100.0f;
 	float maxVelY = -220;
+	float maxVelx = speedX;
 
+	float x = 60;
 	bool right = false;
 	bool left = false;
 

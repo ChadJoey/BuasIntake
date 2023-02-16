@@ -129,6 +129,9 @@ namespace Tmpl8
 		{
 			e.Render(*screen);
 		}
+
+
+
 		//check for collision
 		for (int i = 1; i < entities.size(); i++)
 		{
@@ -136,14 +139,22 @@ namespace Tmpl8
 			{
 				return;
 			}
-			if (collision::OneWayAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>()))
-			{
+			entities[0].GetComponent<ColliderComponent>()->SetVelocity(entities[0].GetComponent<PlayerComponent>()->velY, entities[0].GetComponent<PlayerComponent>()->velX);
+			float colTime = collision::SweptAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>());
+
+
 				if (entities[0].GetComponent<PlayerComponent>()->velY >= 0)
 				{
-					entities[0].GetComponent<PlayerComponent>()->flipVelocity();
+					//check if there is a collision within a small window of time
+					if (colTime <= 0.1f)
+					{
+						entities[0].GetComponent<PlayerComponent>()->flipVelocity();
+					}
 				}
-			}
 		}
+
+
+
 
 
 		

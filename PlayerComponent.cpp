@@ -14,10 +14,6 @@ PlayerComponent::PlayerComponent() :
 }
 
 
-float x = 0.0f;
-
-
-
 void PlayerComponent::Update(Entity& entity)
 {
 	if (!entity.isActive)
@@ -52,14 +48,24 @@ void PlayerComponent::Update(Entity& entity)
 
 	if (right)
 	{
-		x += speedX * delta;
+		velX += speedX * delta;
+		if (velX >= maxVelx)
+		{
+			velX = maxVelx;
+		}
+		x += velX * delta;
 		sprite->SetFrame(4);
 	}
 	
 	
 	if (left)
 	{
-		x -= speedX * delta;
+		velX -= speedX * delta;
+		if (velX >= -maxVelx)
+		{
+			velX = maxVelx;
+		}
+		x -= velX * delta;
 		sprite->SetFrame(0);
 	}
 

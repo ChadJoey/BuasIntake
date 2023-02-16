@@ -18,7 +18,11 @@ void ColliderComponent::Init(Entity& entity)
 
 }
 
-
+void ColliderComponent::SetVelocity(float vx, float vy)
+{
+	box.vx = vx;
+	box.vy = vy;
+}
 
 
 void ColliderComponent::Update(Entity& entity)
