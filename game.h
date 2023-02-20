@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "CameraController.h"
 #include "game.h"
+#include "Button.h" 
 #include "SDL_scancode.h"
 
 
@@ -31,6 +32,7 @@ public:
 	void Init();
 	void Shutdown();
 	void Tick( float deltaTime );
+	void StartScreenAnim();
 	void MouseUp(int button);
 	void MouseDown(int button);
 	void MouseMove(int x, int y);
@@ -44,5 +46,19 @@ private:
 	Surface* screen;
 	float platformSpeed = 300;
 	std::vector<Entity> entities;
+	std::vector<Button> buttons;
+	float time = 0;
+	
+
+	bool gameStart = false;
+
+
+	struct UiScreen
+	{
+		vec2 pos = {0};
+	};
+
+	UiScreen startMenu;
+	UiScreen endScreen;
 };
 }; // namespace Tmpl8

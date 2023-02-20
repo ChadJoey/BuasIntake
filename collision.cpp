@@ -40,6 +40,8 @@ float collision::SweptAABB(ColliderComponent* rectA, ColliderComponent* rectB)
 
 float collision::SweptAABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
 {
+
+
 	float xInvEntry, yInvEntry;
 	float xInvExit, yInvExit;
 
@@ -101,7 +103,10 @@ float collision::SweptAABB(ColliderComponent::rect& rectA, ColliderComponent::re
 	}
 	else
 	{
-		return entryTime;
+		if (rectA.bottom <= rectB.top)
+		{
+			return entryTime;
+		}
 	}
 
 

@@ -37,7 +37,7 @@ public:
 	void SetVelocity(float vx, float vy);
 
 	//update the component
-	void Update(Entity& entity) override;
+	auto Update(Entity& entity) -> void override;
 
 
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;

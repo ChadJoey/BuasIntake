@@ -9,6 +9,7 @@ public:
 	PlatformComponent() = default;
 	void Update(Entity& entity) override;
 
+	void Init(Entity& entity) override;
 
 	void MovePlatform(Entity& entity, TransformComponent* t)
 	{

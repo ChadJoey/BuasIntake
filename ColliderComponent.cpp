@@ -27,6 +27,16 @@ void ColliderComponent::SetVelocity(float vx, float vy)
 
 void ColliderComponent::Update(Entity& entity)
 {
+	if (!entity.isActive)
+	{
+		return;
+	}
+	if (entity.GetComponent<PlayerComponent>())
+	{
+		auto* player = entity.GetComponent<PlayerComponent>();
+		SetVelocity(player->velX, player->velY);
+	}
+
 	auto* t = entity.GetComponent<TransformComponent>();
 	auto* s = entity.GetComponent<SpriteComponent>();
 
@@ -39,6 +49,10 @@ void ColliderComponent::Update(Entity& entity)
 
 void ColliderComponent::Render(Entity& entity, Tmpl8::Surface& screen)
 {
+	if (!entity.isActive)
+	{
+		return;
+	}
 	auto* transform = entity.GetComponent<TransformComponent>();
 	auto* sprite = entity.GetComponent<SpriteComponent>();
 	screen.Box(box.left, box.top,box.right,box.bottom, 0xff);

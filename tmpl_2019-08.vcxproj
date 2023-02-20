@@ -223,6 +223,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -237,6 +238,7 @@
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="Component.h" />

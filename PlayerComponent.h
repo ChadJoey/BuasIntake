@@ -47,8 +47,8 @@ private:
 	float gravity = 100.0f;
 	float maxVelY = -220;
 	float maxVelx = speedX;
-
-	float x = 60;
+	bool canMove = false;
+	float x = 50;
 	bool right = false;
 	bool left = false;
 

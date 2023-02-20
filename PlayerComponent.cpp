@@ -87,8 +87,7 @@ void PlayerComponent::Update(Entity& entity)
 	}
 
 	//update position
-	transform->SetPosition({x, y});
-
+	transform->SetPosition({ x, y });
 
 	//------------------------------------------------------------------------
 
@@ -120,6 +119,12 @@ void PlayerComponent::Wrap(Entity& entity)
 
 void PlayerComponent::KeyDown(Entity& entity, const SDL_Scancode key)
 {
+	if (!entity.isActive || !canMove)
+	{
+		return;
+	}
+
+
 	TransformComponent* transform = entity.GetComponent<TransformComponent>();
 	SpriteComponent* sprite = entity.GetComponent<SpriteComponent>();
 	switch (key)
@@ -141,6 +146,11 @@ void PlayerComponent::KeyDown(Entity& entity, const SDL_Scancode key)
 
 void PlayerComponent::KeyUp(Entity& entity, SDL_Scancode key)
 {
+
+	if (!entity.isActive || !canMove)
+	{
+		return;
+	}
 	switch (key)
 	{
 	case SDL_SCANCODE_D:

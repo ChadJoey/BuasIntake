@@ -11,8 +11,19 @@
 namespace Tmpl8
 {
 
+
 	Game::Game()
 	{
+		Button* button = (new Button({110,299}, new Surface("assets/doodle/play-btn.png")));
+		buttons.push_back(*button);
+
+
+		//Button* closeButton = (new Button({400,500}, new Surface("assets/doodle/close.png")));
+		//buttons.push_back(*closeButton);
+
+
+		buttons[0].SetActive(true);
+		//buttons[1].SetActive(true);
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
@@ -48,20 +59,22 @@ namespace Tmpl8
 
 	}
 
+	Sprite mainBackground(new Surface("assets/doodle/space-bck@2x.png"), 1);
+	Sprite startMenuSprite(new Surface(("assets/doodle/space-menu.png")), 1);
 
 
 	void Game::Init()
 	{
-
 		for (auto& e : entities)
 		{
 			e.Init();
 		}
-
+		entities[1].SetActive(true);
 	}
 	
 	void Game::Shutdown()
 	{
+
 	}
 
 
@@ -73,6 +86,7 @@ namespace Tmpl8
 		{
 			e.MouseUp(button);
 		}
+		buttons[0].OnClick(gameStart);
 	}
 
 	void Game::MouseDown(int button)
@@ -81,6 +95,8 @@ namespace Tmpl8
 		{
 			e.MouseDown(button);
 		}
+
+		
 	}
 
 	void Game::MouseMove(int x, int y)
@@ -89,6 +105,14 @@ namespace Tmpl8
 		{
 			e.MouseMove(x, y);
 		}
+
+		for (auto& b : buttons)
+		{
+			b.MouseMove(x, y);
+		}
+
+
+
 	}
 
 	void Game::KeyDown(SDL_Scancode key)
@@ -108,17 +132,15 @@ namespace Tmpl8
 		}
 	}
 
-	Sprite mainBackground(new Surface("assets/doodle/space-bck@2x.png"), 1);
-	Sprite startMenu(new Surface("assets/doodle/space-menu.png"), 1);
 
-	
+
 
 	void Game::Tick(float)
 	{
 		Timer::Get().Tick();
 		screen->Clear(0);
 		mainBackground.Draw(screen, 0, 0);
-		startMenu.Draw(screen, 0, 0);
+		startMenuSprite.Draw(screen, startMenu.pos.x, startMenu.pos.y);
 		//convert deltaTime to seconds
 		for (auto& e : entities)
 		{
@@ -130,7 +152,10 @@ namespace Tmpl8
 			e.Render(*screen);
 		}
 
-
+		for (auto& b : buttons)
+		{
+			b.Render(*screen);
+		}
 
 		//check for collision
 		for (int i = 1; i < entities.size(); i++)
@@ -139,22 +164,19 @@ namespace Tmpl8
 			{
 				return;
 			}
-			entities[0].GetComponent<ColliderComponent>()->SetVelocity(entities[0].GetComponent<PlayerComponent>()->velY, entities[0].GetComponent<PlayerComponent>()->velX);
+
 			float colTime = collision::SweptAABB(entities[0].GetComponent<ColliderComponent>(), entities[i].GetComponent<ColliderComponent>());
 
 
 				if (entities[0].GetComponent<PlayerComponent>()->velY >= 0)
 				{
 					//check if there is a collision within a small window of time
-					if (colTime <= 0.1f)
+					if (colTime <= 0.05f)
 					{
 						entities[0].GetComponent<PlayerComponent>()->flipVelocity();
 					}
 				}
 		}
-
-
-
 
 
 		
@@ -167,11 +189,38 @@ namespace Tmpl8
 			for (auto& e : entities)
 			{
 				auto et = e.GetComponent<TransformComponent>();
-
 				et->SetOffset(cameraControl->GetPos());
 				et->SetPosition({et->GetOffsetPos()});
 			}
 		}
+
+
+		if (gameStart)
+		{
+			if (startMenu.pos.y > -ScreenHeight)
+			{
+				time += Timer::Get().GetElapsedSeconds();
+				StartScreenAnim();
+			}
+		}
+
+
+
+	}
+
+
+
+	void Game::StartScreenAnim()
+	{
+		if (time < 0.1f)
+		{
+			startMenu.pos.y += (750 * Timer::Get().GetElapsedSeconds());
+		}
+		else
+		{
+			startMenu.pos.y -= (2000 * Timer::Get().GetElapsedSeconds());
+		}
+
 	}
 
 

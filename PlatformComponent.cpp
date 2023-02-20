@@ -12,3 +12,8 @@ void PlatformComponent::Update(Entity& entity)
 		MovePlatform(entity, t);
 	}
 }
+
+void PlatformComponent::Init(Entity& entity)
+{
+	entity.SetActive(false);
+}
