@@ -36,6 +36,7 @@ public:
 	float yOffset = 0.0f;
 	float y = 300;
 	float velX = 0;
+	bool canMove = false;
 
 
 protected:
@@ -45,9 +46,8 @@ private:
 	//pixels per second
 	float speedX = 100.0f;
 	float gravity = 100.0f;
-	float maxVelY = -220;
+	float maxVelY = -210;
 	float maxVelx = speedX;
-	bool canMove = false;
 	float x = 50;
 	bool right = false;
 	bool left = false;

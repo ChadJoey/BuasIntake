@@ -45,7 +45,7 @@ public:
 		onButton = false;
 	}
 
-	void Render(Tmpl8::Surface& screen);
+	void Render(Tmpl8::Surface* screen);
 
 	bool IsActive() { return active; }
 

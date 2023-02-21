@@ -10,7 +10,9 @@
 PlayerComponent::PlayerComponent() :
  timer(Timer::Get())
 {
-	
+
+	velX = 0;
+
 }
 
 
@@ -79,12 +81,6 @@ void PlayerComponent::Update(Entity& entity)
 
 	velY += gravity * delta;
 	y += velY * delta;
-
-	if (y > (ScreenHeight - sprite->GetHeight()))
-	{
-
-		y = ScreenHeight - sprite->GetHeight();
-	}
 
 	//update position
 	transform->SetPosition({ x, y });

@@ -14,16 +14,16 @@ namespace Tmpl8
 
 	Game::Game()
 	{
-		Button* button = (new Button({110,299}, new Surface("assets/doodle/play-btn.png")));
-		buttons.push_back(*button);
+		Button* button( new Button({110,299}, new Surface("assets/doodle/play-btn.png")));
+		buttons.push_back(button);
 
 
-		//Button* closeButton = (new Button({400,500}, new Surface("assets/doodle/close.png")));
-		//buttons.push_back(*closeButton);
+		Button* closeButton( new Button({400,500}, new Surface("assets/doodle/close.png")));
+		buttons.push_back(closeButton);
 
 
-		buttons[0].SetActive(true);
-		//buttons[1].SetActive(true);
+		buttons[0]->SetActive(true);
+		buttons[1]->SetActive(true);
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
@@ -57,10 +57,13 @@ namespace Tmpl8
 			entities.push_back(std::move(platform));
 		}
 
+		endScreen = { 0, 800 };
+
 	}
 
 	Sprite mainBackground(new Surface("assets/doodle/space-bck@2x.png"), 1);
 	Sprite startMenuSprite(new Surface(("assets/doodle/space-menu.png")), 1);
+	Sprite endScreenSprite(new Surface(("assets/doodle/end-screen.png")), 1);
 
 
 	void Game::Init()
@@ -86,7 +89,7 @@ namespace Tmpl8
 		{
 			e.MouseUp(button);
 		}
-		buttons[0].OnClick(gameStart);
+		buttons[0]->OnClick(gameStart);
 	}
 
 	void Game::MouseDown(int button)
@@ -108,7 +111,7 @@ namespace Tmpl8
 
 		for (auto& b : buttons)
 		{
-			b.MouseMove(x, y);
+			b->MouseMove(x, y);
 		}
 
 
@@ -140,7 +143,11 @@ namespace Tmpl8
 		Timer::Get().Tick();
 		screen->Clear(0);
 		mainBackground.Draw(screen, 0, 0);
-		startMenuSprite.Draw(screen, startMenu.pos.x, startMenu.pos.y);
+		startMenuSprite.Draw(screen, startMenu.x, startMenu.y);
+
+		endScreenSprite.Draw(screen, endScreen.x, endScreen.y);
+
+
 		//convert deltaTime to seconds
 		for (auto& e : entities)
 		{
@@ -154,7 +161,7 @@ namespace Tmpl8
 
 		for (auto& b : buttons)
 		{
-			b.Render(*screen);
+			b->Render(screen);
 		}
 
 		//check for collision
@@ -178,14 +185,14 @@ namespace Tmpl8
 				}
 		}
 
-
+		
 		
 		//camera bounds
-		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y < 330)
+		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y < 350)
 		{
-			cameraControl->SetPos({ 0, 350.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
+			cameraControl->SetPos({ 0, 320.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
 			auto pt = entities[0].GetComponent<PlayerComponent>();
-			pt->y = 330;
+			pt->y = 350;
 			for (auto& e : entities)
 			{
 				auto et = e.GetComponent<TransformComponent>();
@@ -197,14 +204,49 @@ namespace Tmpl8
 
 		if (gameStart)
 		{
-			if (startMenu.pos.y > -ScreenHeight)
+			if (startMenu.y > -ScreenHeight)
 			{
 				time += Timer::Get().GetElapsedSeconds();
 				StartScreenAnim();
 			}
+			else
+			{
+				entities[0].GetComponent<PlayerComponent>()->canMove = true;
+				for (auto& e : entities)
+				{
+					e.SetActive(true);
+				}
+				gameStart = false;
+			}
 		}
 
 
+		if (entities[0].GetComponent<TransformComponent>()->GetPosition().y >= 700)
+		{
+			gameover = true;
+		}
+
+		if (gameover)
+		{
+			if (endScreen.y >= -100)
+			{
+				cameraControl->SetPos({ 0, -700.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
+				endScreen.y -= 800 * static_cast<float>(Timer::Get().GetElapsedSeconds());
+
+				auto pt = entities[0].GetComponent<PlayerComponent>();
+
+				for (auto& e : entities)
+				{
+					auto et = e.GetComponent<TransformComponent>();
+					et->SetOffset(cameraControl->GetPos());
+					et->SetPosition({ et->GetOffsetPos() });
+				}
+				pt->y = 710;
+			}
+
+
+
+		}
 
 	}
 
@@ -214,11 +256,11 @@ namespace Tmpl8
 	{
 		if (time < 0.1f)
 		{
-			startMenu.pos.y += (750 * Timer::Get().GetElapsedSeconds());
+			startMenu.y += (750 * Timer::Get().GetElapsedSeconds());
 		}
 		else
 		{
-			startMenu.pos.y -= (2000 * Timer::Get().GetElapsedSeconds());
+			startMenu.y -= (2000 * Timer::Get().GetElapsedSeconds());
 		}
 
 	}

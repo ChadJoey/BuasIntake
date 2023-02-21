@@ -46,17 +46,14 @@ private:
 	Surface* screen;
 	float platformSpeed = 300;
 	std::vector<Entity> entities;
-	std::vector<Button> buttons;
+	std::vector<Button*> buttons;
 	float time = 0;
 	
 
 	bool gameStart = false;
+	bool gameover = false;
 
-
-	struct UiScreen
-	{
-		vec2 pos = {0};
-	};
+	using UiScreen = Tmpl8::vec2;
 
 	UiScreen startMenu;
 	UiScreen endScreen;

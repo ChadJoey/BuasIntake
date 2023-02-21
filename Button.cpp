@@ -21,7 +21,7 @@ void Button::MouseMove(int x, int y)
 
 }
 
-void Button::Render(Tmpl8::Surface& screen)
+void Button::Render(Tmpl8::Surface* screen)
 {
 	if (!active)
 	{
@@ -38,5 +38,5 @@ void Button::Render(Tmpl8::Surface& screen)
 		sprite.SetFrame(0);
 	}
 
-		sprite.Draw(&screen, pos.x, pos.y);
+		sprite.Draw(screen, pos.x, pos.y);
 }

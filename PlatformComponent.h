@@ -24,7 +24,7 @@ public:
 
 private:
 
-	Tmpl8::vec2 maxpos = {ScreenWidth - 60,100};
+	Tmpl8::vec2 maxpos = {ScreenWidth - 60,80};
 	Tmpl8::vec2 minpos = { 0, 0 };
 
 };
