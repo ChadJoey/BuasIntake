@@ -8,7 +8,6 @@
 Entity::Entity(Entity&& copy) noexcept
 	: components(std::move(copy.components))
 {
-	int i = 3;
 }
 
 

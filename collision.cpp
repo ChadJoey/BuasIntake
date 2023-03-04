@@ -5,6 +5,7 @@
 
 bool collision::AABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
 {
+
 	return(rectA.right > rectB.left && rectA.left < rectB.right && rectA.bottom > rectB.top &&
 		rectA.top < rectB.bottom);
 }
@@ -41,10 +42,8 @@ float collision::SweptAABB(ColliderComponent* rectA, ColliderComponent* rectB)
 float collision::SweptAABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
 {
 
-
 	float xInvEntry, yInvEntry;
 	float xInvExit, yInvExit;
-
 	//get distance between objects
 	if (rectA.vx > 0.0f)
 	{

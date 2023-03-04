@@ -11,14 +11,10 @@ class PlayerComponent : public Component
 public:
 	PlayerComponent();
 
-
-
-
-
 	void Update(Entity& entity) override;
 
 
-	virtual void Render(Entity& entity, Tmpl8::Surface& screen) override;
+	void Render(Entity& entity, Tmpl8::Surface& screen) override {};
 
 	// a key is pressed
 	virtual void KeyDown(Entity& entity, SDL_Scancode key) override;
@@ -30,6 +26,21 @@ public:
 	void Wrap(Entity& entity);
 
 	void flipVelocity();
+	void visuals(Entity& entity);
+	void Move();
+	void Knockout(Entity& entity);
+
+	void Reset()
+	{
+		velX = 0;
+		velY = 0;
+		y = 300;
+		x = 50;
+		canMove = false;
+		left = false;
+		right = false;
+		knockedOut = false;
+	}
 
 
 	float velY = 0.0f;
@@ -37,7 +48,10 @@ public:
 	float y = 300;
 	float velX = 0;
 	bool canMove = false;
+	bool knockedOut = false;
 
+	//false = left true is right
+	bool lastDir = false;
 
 protected:
 
@@ -49,13 +63,8 @@ private:
 	float maxVelY = -210;
 	float maxVelx = speedX;
 	float x = 50;
+	float time = 0;
 	bool right = false;
 	bool left = false;
-
-
-
-
-	
-
 };
 

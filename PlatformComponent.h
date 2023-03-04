@@ -1,6 +1,5 @@
 #pragma once
 #include <random>
-#include "Component.h"
 #include "TransformComponent.h"
 
 class PlatformComponent : public Component
@@ -11,7 +10,7 @@ public:
 
 	void Init(Entity& entity) override;
 
-	void MovePlatform(Entity& entity, TransformComponent* t)
+	virtual void MovePlatform(Entity& entity, TransformComponent* t)
 	{
 		std::random_device                  rand_dev;
 		std::mt19937                        generator(rand_dev());
@@ -20,12 +19,8 @@ public:
 
 		t->SetPosition({ static_cast<float>(genX(generator)), static_cast<float>(-genY(generator))});
 	}
-	
-
-private:
-
-	Tmpl8::vec2 maxpos = {ScreenWidth - 60,80};
+protected:
+	Tmpl8::vec2 maxpos = { ScreenWidth - 60,80 };
 	Tmpl8::vec2 minpos = { 0, 0 };
-
 };
 

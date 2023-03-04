@@ -48,7 +48,5 @@ public:
 protected:
 	Entity& entity;
 private:
-
-
 };
 

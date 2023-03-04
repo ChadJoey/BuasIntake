@@ -8,9 +8,9 @@
 class Button
 {
 public:
-	Button(Tmpl8::vec2 pos, Tmpl8::Surface* sprite) :
+	Button(Tmpl8::vec2 pos, Tmpl8::Surface* surface) :
 	pos(pos),
-	sprite(sprite ,2)
+	sprite(surface ,2)
 	{}
 
 	~Button() = default;
@@ -49,6 +49,15 @@ public:
 
 	bool IsActive() { return active; }
 
+	Tmpl8::vec2 GetPos()
+	{
+		return pos;
+	}
+
+	void SetPos(Tmpl8::vec2 pos)
+	{
+		this->pos = pos;
+	}
 
 	void ButtonUp(){}
 
@@ -56,7 +65,6 @@ public:
 private:
 	Tmpl8::vec2 pos;
 	Tmpl8::Sprite sprite;
-
 
 	bool active = false;
 	bool onButton = false;

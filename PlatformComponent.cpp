@@ -6,6 +6,7 @@ void PlatformComponent::Update(Entity& entity)
 	{
 		return;
 	}
+
 	auto* t = entity.GetComponent<TransformComponent>();
 	if (t->GetPosition().y > ScreenHeight)
 	{

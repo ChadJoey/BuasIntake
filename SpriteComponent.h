@@ -46,18 +46,6 @@ public:
 
 
 
-
-	static const std::string& ID()
-	{
-		static std::string id = "SpriteComponent";
-		return id;
-	}
-
-	virtual const std::string& GetID()
-	{
-		return ID();
-	}
-
 	virtual void Update(Entity& entity) override;
 
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;

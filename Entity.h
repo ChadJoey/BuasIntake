@@ -22,7 +22,6 @@ namespace Tmpl8
 class Entity
 {
 public:
-
 	Entity() = default;
 
 	Entity(const Entity& copy) = delete;

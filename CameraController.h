@@ -23,6 +23,11 @@ public:
 		cam->camPos += addPos;
 	}
 
+	void reset()
+	{
+		cam->camPos = { 0,0 };
+	}
+
 private:
 	Camera* cam;
 };
