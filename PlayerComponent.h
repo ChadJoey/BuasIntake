@@ -49,11 +49,10 @@ public:
 	float velX = 0;
 	bool canMove = false;
 	bool knockedOut = false;
-
-	//false = left true is right
-	bool lastDir = false;
+	bool facingRight = false;
 
 protected:
+
 
 private:
 	Timer& timer;
@@ -64,6 +63,8 @@ private:
 	float maxVelx = speedX;
 	float x = 50;
 	float time = 0;
+	float timeIncrement = 0.15f;
+	int knockoutFrame = 0;
 	bool right = false;
 	bool left = false;
 };

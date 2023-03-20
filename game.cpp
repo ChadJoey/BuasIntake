@@ -15,6 +15,8 @@ namespace Tmpl8
 
 	Game::Game()
 	{
+		obMan = new ObstacleManager(platforms, BreakingPlatforms, enemies);
+
 		buttons.push_back(new Button({ 110,299 }, new Surface("assets/doodle/play-btn.png")));
 
 		buttons.push_back(new Button({ 441,650 }, new Surface("assets/doodle/close.png")));
@@ -39,10 +41,10 @@ namespace Tmpl8
 		{
 			Entity platform;
 			platform.AddComponent(new TransformComponent());
-			platform.GetComponent<TransformComponent>()->SetPosition({ startingPos[i] });
 			platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
 			platform.AddComponent(new ColliderComponent(platform));
 			platform.AddComponent(new PlatformComponent());
+			platform.SetActive(false);
 			platforms.push_back(std::move(platform));
 		}
 		//make sprites shared
@@ -63,8 +65,10 @@ namespace Tmpl8
 
 		enemies.push_back(std::move(enemy));
 
+		enemies[0].SetActive(false);
 		SetPlatforms(false);
 		platforms[0].SetActive(true);
+		platforms[0].GetComponent<TransformComponent>()->SetPosition({ 40, 650 });
 
 		endScreen = { 0, 800 };
 	}
@@ -75,10 +79,6 @@ namespace Tmpl8
 		gameOver = false;
 		cameraControl->reset();
 		player.GetComponent<PlayerComponent>()->Reset();
-		for (size_t i = 0; i < platforms.size(); i++)
-		{
-			platforms[i].GetComponent<TransformComponent>()->SetPosition(startingPos[i]);
-		}
 
 		for (auto& breakingPlat : BreakingPlatforms)
 		{
@@ -89,12 +89,9 @@ namespace Tmpl8
 
 		SetPlatforms(false);
 		platforms[0].SetActive(true);
-
 		startMenu = { 0,0 };
 		buttons[0]->SetActive(true);
 		buttons[1]->SetActive(true);
-
-
 		endScreen = { 0, 800 };
 	}
 
@@ -156,6 +153,19 @@ namespace Tmpl8
 		endScreenSprite.Draw(screen, endScreen.x, endScreen.y);
 
 
+		if (score >= 20000)
+		{
+			obMan->platformDensity = 7;
+			obMan->maxPlatformDist = 150;
+			obMan->minPlatformDist = 100;
+		}
+		else if(score >= 10000)
+		{
+			obMan->platformDensity = 24;
+			obMan->maxPlatformDist = 200;
+			obMan->minPlatformDist = 150;
+		}
+
 		if (restart)
 		{
 			ResetGame();
@@ -179,6 +189,8 @@ namespace Tmpl8
 		//camera bounds
 		if (player.GetComponent<TransformComponent>()->GetPosition().y < 350)
 		{
+			score += Timer::Get().GetElapsedMilliseconds();
+			std::cout << score  << std::endl;
 			cameraControl->SetPos({ 0, 320.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
 			auto pt = player.GetComponent<PlayerComponent>();
 			pt->y = 350;
@@ -202,6 +214,13 @@ namespace Tmpl8
 			}
 		}
 
+		if (gameActive)
+		{
+			obMan->Update();
+		}
+
+
+
 
 		if (gameStart)
 		{
@@ -215,8 +234,9 @@ namespace Tmpl8
 			else
 			{
 				player.GetComponent<PlayerComponent>()->canMove = true;
-				SetPlatforms(true);
+				enemies[0].SetActive(true);
 				gameStart = false;
+				gameActive = true;
 			}
 		}
 
@@ -234,6 +254,7 @@ namespace Tmpl8
 
 		if (gameOver)
 		{
+			gameActive = false;
 			MoveToEndScreen();
 
 			for (auto& bp: BreakingPlatforms)
@@ -277,6 +298,10 @@ namespace Tmpl8
 				buttons[2]->SetActive(true);
 			}
 		}
+		else
+		{
+			player.GetComponent<SpriteComponent>()->SetFrame(0);
+		}
 	}
 
 	//==============================================================================================
@@ -285,6 +310,10 @@ namespace Tmpl8
 	{
 		for (auto& p : platforms)
 		{
+			if (!p.isActive)
+			{
+				continue;
+			}
 
 			if (player.GetComponent<PlayerComponent>()->velY >= 0)
 			{
@@ -319,8 +348,18 @@ namespace Tmpl8
 
 		for (auto& e : enemies)
 		{
-			//check if there is a collision within a small window of time
-			if (collision::AABB(player.GetComponent<ColliderComponent>(), e.GetComponent<ColliderComponent>()))
+
+			if (player.GetComponent<PlayerComponent>()->velY >= 0)
+			{
+				const float colTime = collision::SweptAABB(player.GetComponent<ColliderComponent>(), e.GetComponent<ColliderComponent>());
+				//check if there is a collision within a small window of time
+				if (colTime <= 0.05f)
+				{
+					player.GetComponent<PlayerComponent>()->flipVelocity();
+				}
+
+			}
+			else if (collision::AABB(player.GetComponent<ColliderComponent>(), e.GetComponent<ColliderComponent>()))
 			{
 				player.GetComponent<PlayerComponent>()->Knockout(player);
 			}

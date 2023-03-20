@@ -2,11 +2,11 @@
 #include "PlatformComponent.h"
 #include "SpriteComponent.h"
 
-class BreakingPlatform : public PlatformComponent
+class BreakingPlatform : public Component
 {
 public:
 	BreakingPlatform() = default;
-	void Update(Entity& entity) override;
+	void Update(Entity& entity);
 	void Reset();
 	bool playAnim = false;
 private:

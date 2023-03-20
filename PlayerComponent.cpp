@@ -1,7 +1,5 @@
 #include "PlayerComponent.h"
-
 #include <iostream>
-
 #include "template.h"
 
 
@@ -62,14 +60,13 @@ void PlayerComponent::KeyDown(Entity& entity, const SDL_Scancode key)
 	case SDL_SCANCODE_RIGHT:
 		left = false;
 		right = true;
-		lastDir = true;
+		facingRight = true;
 		break;
 	case SDL_SCANCODE_A:
 	case SDL_SCANCODE_LEFT:
 		right = false;
 		left = true;
-		lastDir = false;
-		
+		facingRight = false;
 		break;
 	}
 }
@@ -105,51 +102,20 @@ void PlayerComponent::flipVelocity()
 void PlayerComponent::visuals(Entity& entity)
 {
 	SpriteComponent* sprite = entity.GetComponent<SpriteComponent>();
-	
+
+
 	if (knockedOut)
 	{
 		time += timer.GetElapsedSeconds();
-		if (time < 0.15f)
+		if (time > timeIncrement)
 		{
-			if (!lastDir)
-			{
-				sprite->SetFrame(6);
-			}
-			else
-			{
-				sprite->SetFrame(9);
-			}
-		}
-		else if (time < 0.3f)
-		{
-			if (!lastDir)
-			{
-				sprite->SetFrame(7);
-			}
-			else
-			{
-				sprite->SetFrame(10);
-			}
-		}
-		else if (time < 0.45f)
-		{
-			if (!lastDir)
-			{
-				sprite->SetFrame(8);
-			}
-			else
-			{
-				sprite->SetFrame(11);
-			}
-		}
-		else if (time > 0.45f)
-		{
+			// help from erik making this a lot cleaner rather then using a bunch of else if statements
+			sprite->SetFrame(knockoutFrame + (facingRight? 9 : 6 ));
+			knockoutFrame = ++knockoutFrame % 3;
 			time = 0;
 		}
 		return;
 	}
-
-
 
 
 	if (sprite->GetFrame() == 4 && velY == maxVelY)

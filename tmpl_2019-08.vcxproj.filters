@@ -36,6 +36,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="ObstacleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -73,6 +74,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="ObstacleManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

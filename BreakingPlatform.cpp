@@ -15,7 +15,6 @@ void BreakingPlatform::Update(Entity& entity)
 		playAnim = false;
 		time = 0;
 		s->SetFrame(2);
-		MovePlatform(entity, t);
 	}
 
 	if (playAnim)

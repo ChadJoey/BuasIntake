@@ -9,6 +9,7 @@
 #include "PlatformComponent.h"
 #include "CameraController.h"
 #include "BreakingPlatform.h"
+#include "ObstacleManager.h"
 #include "Enemy.h"
 #include "Button.h" 
 #include "SDL_scancode.h"
@@ -50,8 +51,10 @@ private:
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;
 	Surface* screen;
+	ObstacleManager* obMan = nullptr;
 
-	int platformAmount = 12;
+	float score = 0;
+	int platformAmount = 25;
 	float platformSpeed = 300;
 	float time = 0;
 
@@ -61,16 +64,9 @@ private:
 	std::vector<Entity> BreakingPlatforms;
 	std::vector<Entity> enemies;
 	std::vector<Button*> buttons;
-	
-	Tmpl8::vec2 startingPos[12]{{40.0f, 650.0f },
-			{120.0f, 500.0f} ,{400.0f, 480.0f}
-			,{250.0f, 200.0f} ,{350.0f, 350.0f}
-			,{600.0f, 150.0f} ,{550.0f, 700.0f},
-		{470.0f, 200.0f} ,{320, 00.0f} ,
-		{-100.0f, 0.0f} ,{-200.0f, 350.0f} ,{-400.0f, 350.0f}
-	};
 
 	bool gameStart = false;
+	bool gameActive = false;
 	bool gameOver = false;
 	bool restart = false;
 	bool endGame = false;

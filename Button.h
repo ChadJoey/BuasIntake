@@ -9,9 +9,10 @@ class Button
 {
 public:
 	Button(Tmpl8::vec2 pos, Tmpl8::Surface* surface) :
-	pos(pos),
-	sprite(surface ,2)
+		pos(pos),
+		sprite(surface, 2)
 	{}
+
 
 	~Button() = default;
 
