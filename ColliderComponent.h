@@ -21,6 +21,11 @@ public:
 		float top;
 		float right;
 
+		float prevLeft = 0;
+		float prevRight = 0;
+		float prevTop = 0;
+		float prevBottom = 0;
+
 		float leftOffset = 0;
 		float bottomOffset = 0;
 		float topOffset = 0;

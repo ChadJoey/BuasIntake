@@ -17,13 +17,13 @@ void PlayerComponent::Update(Entity& entity)
 	{
 		return;
 	}
-	TransformComponent* transform = entity.GetComponent<TransformComponent>();
+	TransformComponent* t = entity.GetComponent<TransformComponent>();
 
 	visuals(entity);
 	Move();
 
 	Wrap(entity);
-	transform->SetPosition({ x, y });
+	t->SetPosition({ x, y });
 }
 
 
@@ -179,7 +179,7 @@ void PlayerComponent::Move()
 
 
 
-void PlayerComponent::Knockout(Entity& entity)
+void PlayerComponent::Knockout()
 {
 	knockedOut = true;
 	velY = 0;

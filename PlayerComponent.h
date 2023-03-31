@@ -28,7 +28,7 @@ public:
 	void flipVelocity();
 	void visuals(Entity& entity);
 	void Move();
-	void Knockout(Entity& entity);
+	void Knockout();
 
 	void Reset()
 	{

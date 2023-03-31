@@ -3,111 +3,61 @@
 //source
 //https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/swept-aabb-collision-detection-and-response-r3084/
 
-bool collision::AABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
+void collision::CheckCol(Entity& player, Entity& object)
 {
-
-	return(rectA.right > rectB.left && rectA.left < rectB.right && rectA.bottom > rectB.top &&
-		rectA.top < rectB.bottom);
-}
-
-bool collision::AABB(ColliderComponent* colA, ColliderComponent* colB)
-{
-	return AABB(colA->box, colB->box);
-}
-
-bool collision::OneWayAABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
-{
-	if (rectA.bottom <= rectB.top)
+	
+	auto rectA = player.GetComponent<ColliderComponent>()->box;
+	auto rectB = object.GetComponent<ColliderComponent>()->box;
+	if(rectA.right > rectB.left && rectA.left < rectB.right && rectA.bottom > rectB.top && rectA.top < rectB.bottom)
 	{
-		return(rectA.right > rectB.left && rectA.left < rectB.right&& rectA.bottom > rectB.top &&
-		rectA.top < rectB.bottom);
+		CheckSides(player, object);
 	}
-	return false;
 }
 
 
-bool collision::OneWayAABB(ColliderComponent* colA, ColliderComponent* colB)
+void collision::CheckSides(Entity& player, Entity& object)
 {
-	return OneWayAABB(colA->box, colB->box);
-}
-
-
-
-float collision::SweptAABB(ColliderComponent* rectA, ColliderComponent* rectB)
-{
-	return SweptAABB(rectA->box, rectB->box);
-}
-
-
-float collision::SweptAABB(ColliderComponent::rect& rectA, ColliderComponent::rect& rectB)
-{
-
-	float xInvEntry, yInvEntry;
-	float xInvExit, yInvExit;
-	//get distance between objects
-	if (rectA.vx > 0.0f)
+	auto rectA = player.GetComponent<ColliderComponent>()->box;
+	auto rectB = object.GetComponent<ColliderComponent>()->box;
+	auto p = player.GetComponent<PlayerComponent>();
+	if (rectA.prevBottom < rectB.top && rectA.bottom >= rectB.top)
 	{
-		xInvEntry = rectB.left - rectA.right;
-		xInvExit = rectB.right - rectA.left;
-	}
-	else
-	{
-		xInvEntry = rectB.right - rectA.left;
-		xInvExit = rectB.left - rectA.right;
-	}
-
-	if (rectA.vy > 0.0f)
-	{
-		yInvEntry = rectB.top - rectA.bottom;
-		yInvExit = rectB.bottom - rectA.top;
-	}
-	else
-	{
-		yInvEntry = rectB.bottom - rectA.top;
-		yInvExit = rectB.top - rectA.bottom;
-	}
-
-	float xEntry, yEntry;
-	float xExit, yExit;
-	//find the time between objects
-	if (rectA.vx == 0.0f)
-	{
-		xEntry = -std::numeric_limits<float>::infinity();
-		xExit = std::numeric_limits<float>::infinity();
-	}
-	else
-	{
-		xEntry = xInvEntry / rectA.vx;
-		xExit = xInvExit / rectA.vx;
-	}
-
-	if (rectA.vy == 0.0f)
-	{
-		yEntry = -std::numeric_limits<float>::infinity();
-		xExit = std::numeric_limits<float>::infinity();
-	}
-	else
-	{
-		yEntry = yInvEntry / rectA.vy;
-		yExit = yInvExit / rectA.vy;
-	}
-
-	const float entryTime = std::max(xEntry, yEntry);
-	const float exitTime = std::min(xExit, yExit);
-
-	//check if we have collided or not
-	if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
-	{
-		return 1.0f;
-	}
-	else
-	{
-		if (rectA.bottom <= rectB.top)
+		//collision at the bottom of the player
+		if (!object.GetComponent<BreakingPlatform>() && p->velY > 0)
 		{
-			return entryTime;
+			p->flipVelocity();
 		}
 	}
 
+
+	if (rectA.prevTop < rectB.bottom && rectA.top > rectB.bottom)
+	{
+		//collision at the top of the player
+		if (object.GetComponent<Enemy>())
+		{
+			p->Knockout();
+		}
+	}
+
+
+	if (rectA.prevLeft < rectB.right && rectA.left > rectB.right)
+	{
+		//collision at the left of the player
+		if (object.GetComponent<Enemy>())
+		{
+			p->Knockout();
+		}
+	}
+
+
+	if (rectA.prevRight < rectB.left && rectA.right > rectB.left)
+	{
+		//collision at the right of the player
+		if (object.GetComponent<Enemy>())
+		{
+			p->Knockout();
+		}
+	}
 
 }
 

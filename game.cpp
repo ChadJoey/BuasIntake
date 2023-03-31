@@ -314,58 +314,27 @@ namespace Tmpl8
 			{
 				continue;
 			}
-
-			if (player.GetComponent<PlayerComponent>()->velY >= 0)
-			{
-				const float colTime = collision::SweptAABB(player.GetComponent<ColliderComponent>(), p.GetComponent<ColliderComponent>());
-				//check if there is a collision within a small window of time
-				if (colTime <= 0.05f)
-				{
-					player.GetComponent<PlayerComponent>()->flipVelocity();
-				}
-
-			}
-
-
+			collision::CheckCol(player, p);
 		}
 
 		for (auto& bp : BreakingPlatforms)
 		{
-			if (player.GetComponent<PlayerComponent>()->velY >= 0)
-			{
-				const float colTime = collision::SweptAABB(player.GetComponent<ColliderComponent>(), bp.GetComponent<ColliderComponent>());
-				//check if there is a collision within a small window of time
-				if (colTime <= 0.05f)
-				{
-					if (bp.GetComponent<BreakingPlatform>())
-					{
-						bp.GetComponent<BreakingPlatform>()->playAnim = true;
-					}
-				}
-			}
+			collision::CheckCol(player, bp);
 		}
 
 
 		for (auto& e : enemies)
 		{
-
-			if (player.GetComponent<PlayerComponent>()->velY >= 0)
-			{
-				const float colTime = collision::SweptAABB(player.GetComponent<ColliderComponent>(), e.GetComponent<ColliderComponent>());
-				//check if there is a collision within a small window of time
-				if (colTime <= 0.05f)
-				{
-					player.GetComponent<PlayerComponent>()->flipVelocity();
-				}
-
-			}
-			else if (collision::AABB(player.GetComponent<ColliderComponent>(), e.GetComponent<ColliderComponent>()))
-			{
-				player.GetComponent<PlayerComponent>()->Knockout(player);
-			}
+			collision::CheckCol(player, e);
 		}
-	}
 
+		auto col = player.GetComponent<ColliderComponent>();
+		col->box.prevRight = col->box.right;
+		col->box.prevBottom = col->box.bottom;
+		col->box.prevLeft = col->box.left;
+		col->box.prevTop = col->box.top;
+
+	}
 
 	//==============================================================================================
 
