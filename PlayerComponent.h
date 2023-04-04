@@ -57,13 +57,13 @@ protected:
 private:
 	Timer& timer;
 	//pixels per second
-	float speedX = 100.0f;
-	float gravity = 100.0f;
-	float maxVelY = -210;
+	float speedX = 300.0f;
+	float gravity = 200.0f;
+	float maxVelY = -430;
 	float maxVelx = speedX;
 	float x = 50;
 	float time = 0;
-	float timeIncrement = 0.15f;
+	float timeIncrement = 0.05f;
 	int knockoutFrame = 0;
 	bool right = false;
 	bool left = false;

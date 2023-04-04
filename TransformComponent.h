@@ -1,19 +1,21 @@
 #pragma once
 #include "template.h"
 #include "Component.h"
+#include "CameraController.h"
 #include "PlayerComponent.h"
 
 class TransformComponent : public Component
 {
 public:
-	TransformComponent() = default;
+	TransformComponent(CameraController* cam) :
+	cam(cam)
+	{
+		
+	};
 
-
-
-	virtual void Update(Entity& entity) override;
 	void SetPosition(const Tmpl8::vec2& position)
 	{
-		this->position = position;
+		this->position = position + cam->GetPos();
 	}
 
 	void AddPosition(const Tmpl8::vec2 position)
@@ -23,22 +25,12 @@ public:
 
 	Tmpl8::vec2 GetPosition() const
 	{
-		return position;
+		return position + cam->GetPos();
 	}
 
-	void SetOffset(Tmpl8::vec2 offset)
-	{
-		this->offset = offset;
-	}
 
-	Tmpl8::vec2 GetOffsetPos()
-	{
-		return position + offset;
-	}
-
-	
+	CameraController* cam;
 private:
-	Tmpl8::vec2 offset;
 	Tmpl8::vec2 position;
 };
 

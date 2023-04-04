@@ -1,12 +1,12 @@
 #pragma once
 #include "Camera.h"
+#include "Timer.h"
 
- class CameraController
+class CameraController
 {
 public:
 	CameraController(Camera* cam):
 	cam(cam){}
-	
 
 	Tmpl8::vec2 GetPos() 
 	{
@@ -26,6 +26,16 @@ public:
 	void reset()
 	{
 		cam->camPos = { 0,0 };
+	}
+
+	float GetNewTop()
+	{
+		return cam->camBounds.top - GetPos().y;
+	}
+
+	void MoveCam(float speed)
+	{
+		AddPos({ 0, -speed * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
 	}
 
 private:

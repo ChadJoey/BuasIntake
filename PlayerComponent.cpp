@@ -21,9 +21,14 @@ void PlayerComponent::Update(Entity& entity)
 
 	visuals(entity);
 	Move();
-
 	Wrap(entity);
+
 	t->SetPosition({ x, y });
+
+	if (t->GetPosition().y < t->cam->GetNewTop() && velY < 0)
+	{
+		t->cam->MoveCam(velY);
+	}
 }
 
 

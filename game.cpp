@@ -28,7 +28,7 @@ namespace Tmpl8
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
-		player.AddComponent(new TransformComponent());
+		player.AddComponent(new TransformComponent(cameraControl));
 		player.AddComponent(new PlayerComponent);
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 12));
 		player.AddComponent(new ColliderComponent(player));
@@ -39,7 +39,7 @@ namespace Tmpl8
 		for (size_t i = 0; i < platformAmount; i++)
 		{
 			Entity platform;
-			platform.AddComponent(new TransformComponent());
+			platform.AddComponent(new TransformComponent(cameraControl));
 			platform.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-tiles.png"), 4));
 			platform.AddComponent(new ColliderComponent(platform));
 			platform.AddComponent(new PlatformComponent());
@@ -48,7 +48,7 @@ namespace Tmpl8
 		}
 		//make sprites shared
 		Entity breakingBad;
-		breakingBad.AddComponent(new TransformComponent());
+		breakingBad.AddComponent(new TransformComponent(cameraControl));
 		breakingBad.GetComponent<TransformComponent>()->SetPosition({350, 200});
 		breakingBad.AddComponent(new SpriteComponent(new Surface("assets/doodle/breakingBad.png"), 4));
 		breakingBad.AddComponent(new ColliderComponent(breakingBad));
@@ -56,7 +56,7 @@ namespace Tmpl8
 		BreakingPlatforms.push_back(std::move(breakingBad));
 
 		Entity enemy;
-		enemy.AddComponent(new TransformComponent());
+		enemy.AddComponent(new TransformComponent(cameraControl));
 		enemy.GetComponent<TransformComponent>()->SetPosition({ 250,50 });
 		enemy.AddComponent(new SpriteComponent(new Surface("assets/doodle/Enemies.png"), 4));
 		enemy.AddComponent(new ColliderComponent(enemy));
@@ -187,39 +187,12 @@ namespace Tmpl8
 
 		
 		//camera bounds
-		if (player.GetComponent<TransformComponent>()->GetPosition().y < 350)
-		{
-			score += Timer::Get().GetElapsedMilliseconds();
-			std::cout << score  << std::endl;
-			cameraControl->SetPos({ 0, 320.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
-			auto pt = player.GetComponent<PlayerComponent>();
-			pt->y = 350;
-			for (auto& p : platforms)
-			{
-				auto t = p.GetComponent<TransformComponent>();
-				t->SetOffset(cameraControl->GetPos());
-				t->SetPosition({t->GetOffsetPos()});
-			}
-			for (auto& p : BreakingPlatforms)
-			{
-				auto t = p.GetComponent<TransformComponent>();
-				t->SetOffset(cameraControl->GetPos());
-				t->SetPosition({ t->GetOffsetPos() });
-			}
-			for (auto& e : enemies)
-			{
-				auto t = e.GetComponent<TransformComponent>();
-				t->SetOffset(cameraControl->GetPos());
-				t->SetPosition({ t->GetOffsetPos() });
-			}
-		}
-
+		score += Timer::Get().GetElapsedMilliseconds();
+		std::cout << score << std::endl;
 		if (gameActive)
 		{
 			obMan->Update();
 		}
-
-
 
 
 		if (gameStart)
@@ -277,22 +250,6 @@ namespace Tmpl8
 			{
 				bp.SetActive(false);
 			}
-
-			auto pt = player.GetComponent<PlayerComponent>();
-			for (auto& p : platforms)
-			{
-				auto t = p.GetComponent<TransformComponent>();
-				t->SetOffset(cameraControl->GetPos());
-				t->SetPosition({ t->GetOffsetPos() });
-			}
-			for (auto& e : enemies)
-			{
-				auto t = e.GetComponent<TransformComponent>();
-				t->SetOffset(cameraControl->GetPos());
-				t->SetPosition({ t->GetOffsetPos() });
-			}
-			pt->y = 710;
-
 			if (endScreen.y <= -90)
 			{
 				buttons[2]->SetActive(true);
