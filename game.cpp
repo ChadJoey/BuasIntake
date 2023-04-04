@@ -12,7 +12,6 @@
 namespace Tmpl8
 {
 
-
 	Game::Game()
 	{
 		obMan = new ObstacleManager(platforms, BreakingPlatforms, enemies);
@@ -107,6 +106,7 @@ namespace Tmpl8
 	
 	void Game::Shutdown()
 	{
+
 	}
 
 	void Game::MouseUp(int button)

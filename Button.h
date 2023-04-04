@@ -38,8 +38,6 @@ public:
 
 	void MouseMove(int x , int y);
 
-	void MouseDown(bool& state);
-
 	void SetActive(bool state)
 	{
 		active = state;
@@ -59,8 +57,6 @@ public:
 	{
 		this->pos = pos;
 	}
-
-	void ButtonUp(){}
 
 
 private:
