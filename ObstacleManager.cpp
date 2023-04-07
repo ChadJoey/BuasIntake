@@ -18,7 +18,8 @@ void ObstacleManager::MoveObstacle(Entity& entity, Tmpl8::vec2 minpos, Tmpl8::ve
 	std::mt19937                        generator(rand_dev());
 	std::uniform_int_distribution<int>  genX(minpos.x, maxpos.x);
 	std::uniform_int_distribution<int>  genY(minpos.y, maxpos.y);
-	t->SetPosition({ static_cast<float>(genX(generator)), static_cast<float>(genY(generator)) });
+	t->SetScreenPosition({ static_cast<float>(genX(generator)), static_cast<float>(genY(generator)) });
+	std::cout << t->GetScreenPos().y << std::endl;
 	lastActivePlatform = entity.GetComponent<TransformComponent>();
 }
 
@@ -46,10 +47,15 @@ void ObstacleManager::UpdatePlatForms()
 		}
 
 		auto* t = p.GetComponent<TransformComponent>();
+
+		//std::cout << ScreenHeight << std::endl;
+
+
 		if (t->GetPosition().y >= ScreenHeight)
 		{
-			MoveObstacle(p, { 0,lastActivePlatform->GetPosition().y - maxPlatformDist }, { ScreenWidth - 60 ,lastActivePlatform->GetPosition().y - minPlatformDist });
-			
+			std::cout << t->GetScreenPos().y << std::endl;
+			std::cout << t->cam->GetPos().y << std::endl;
+			MoveObstacle(p, { 0,lastActivePlatform->GetScreenPos().y - minPlatformDist }, { ScreenWidth - 60 ,lastActivePlatform->GetScreenPos().y - maxPlatformDist });
 		}
 	}
 

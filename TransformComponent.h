@@ -15,13 +15,24 @@ public:
 
 	void SetPosition(const Tmpl8::vec2& position)
 	{
-		this->position = position + cam->GetPos();
+		this->position = cam->GetPos() + position;
 	}
 
 	void AddPosition(const Tmpl8::vec2 position)
 	{
 		this->position += position;
 	}
+
+	Tmpl8::vec2 GetScreenPos()
+	{
+		return position;
+	}
+	void SetScreenPosition(const Tmpl8::vec2& position)
+	{
+		this->position = position;
+	}
+
+
 
 	Tmpl8::vec2 GetPosition() const
 	{

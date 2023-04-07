@@ -25,6 +25,9 @@ void collision::CheckSides(Entity& player, Entity& object)
 		//collision at the bottom of the player
 		if (!object.GetComponent<BreakingPlatform>() && p->velY > 0)
 		{
+			auto* t = player.GetComponent<TransformComponent>();
+			auto* ot = object.GetComponent<TransformComponent>();
+			t->SetScreenPosition({ t->GetScreenPos().x, ot->GetScreenPos().y});
 			p->flipVelocity();
 		}
 	}

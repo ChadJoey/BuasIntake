@@ -20,7 +20,7 @@ public:
 
 	void AddPos(Tmpl8::vec2 addPos) 
 	{
-		cam->camPos += addPos;
+		cam->camPos.y += addPos.y;
 	}
 
 	void reset()
@@ -28,9 +28,9 @@ public:
 		cam->camPos = { 0,0 };
 	}
 
-	float GetNewTop()
+	float GetTop()
 	{
-		return cam->camBounds.top - GetPos().y;
+		return cam->camBounds.top;
 	}
 
 	void MoveCam(float speed)

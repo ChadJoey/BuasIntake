@@ -58,7 +58,7 @@ private:
 	Timer& timer;
 	//pixels per second
 	float speedX = 300.0f;
-	float gravity = 200.0f;
+	float gravity = 400.0f;
 	float maxVelY = -430;
 	float maxVelx = speedX;
 	float x = 50;

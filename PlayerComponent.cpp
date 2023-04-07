@@ -1,5 +1,7 @@
 #include "PlayerComponent.h"
+
 #include <iostream>
+
 #include "template.h"
 
 
@@ -7,7 +9,6 @@
 PlayerComponent::PlayerComponent() :
  timer(Timer::Get())
 {
-	velX = 0;
 }
 
 
@@ -17,25 +18,30 @@ void PlayerComponent::Update(Entity& entity)
 	{
 		return;
 	}
-	TransformComponent* t = entity.GetComponent<TransformComponent>();
+
+	auto* col = entity.GetComponent<ColliderComponent>();
+	auto* t = entity.GetComponent<TransformComponent>();
+	col->box.prevRight = col->box.right;
+	col->box.prevBottom = col->box.bottom;
+	col->box.prevLeft = col->box.left;
+	col->box.prevTop = col->box.top;
+
 
 	visuals(entity);
 	Move();
 	Wrap(entity);
 
-	t->SetPosition({ x, y });
 
-	if (t->GetPosition().y < t->cam->GetNewTop() && velY < 0)
+	if (t->GetPosition().y <= t->cam->GetTop() && velY < 0)
 	{
 		t->cam->MoveCam(velY);
 	}
+	t->SetScreenPosition({ x, y });
 }
-
-
 
 void PlayerComponent::Wrap(Entity& entity)
 {
-	auto pc = entity.GetComponent<ColliderComponent>();
+	auto* pc = entity.GetComponent<ColliderComponent>();
 	if (ScreenWidth <= pc->box.left)
 	{
 		x = -50;
@@ -47,8 +53,6 @@ void PlayerComponent::Wrap(Entity& entity)
 }
 
 
-
-
 void PlayerComponent::KeyDown(Entity& entity, const SDL_Scancode key)
 {
 	if (!entity.isActive || !canMove)
@@ -57,8 +61,8 @@ void PlayerComponent::KeyDown(Entity& entity, const SDL_Scancode key)
 	}
 
 
-	TransformComponent* transform = entity.GetComponent<TransformComponent>();
-	SpriteComponent* sprite = entity.GetComponent<SpriteComponent>();
+	auto* transform = entity.GetComponent<TransformComponent>();
+	auto* sprite = entity.GetComponent<SpriteComponent>();
 	switch (key)
 	{
 	case SDL_SCANCODE_D:
@@ -106,8 +110,7 @@ void PlayerComponent::flipVelocity()
 
 void PlayerComponent::visuals(Entity& entity)
 {
-	SpriteComponent* sprite = entity.GetComponent<SpriteComponent>();
-
+	auto* sprite = entity.GetComponent<SpriteComponent>();
 
 	if (knockedOut)
 	{

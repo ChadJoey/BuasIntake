@@ -16,10 +16,10 @@ public:
 
 	struct rect
 	{
-		float left;
-		float bottom;
-		float top;
-		float right;
+		float left = 0;
+		float bottom = 0;
+		float top = 0;
+		float right = 0;
 
 		float prevLeft = 0;
 		float prevRight = 0;
@@ -42,7 +42,7 @@ public:
 	void SetVelocity(float vx, float vy);
 
 	//update the component
-	auto Update(Entity& entity) -> void override;
+	void Update(Entity& entity) override;
 
 
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;

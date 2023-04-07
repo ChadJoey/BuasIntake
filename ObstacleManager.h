@@ -2,14 +2,17 @@
 #include <vector>
 #include "Entity.h"
 #include "TransformComponent.h"
-
+#include "CameraController.h"
 class ObstacleManager
 {
+
+
 public:
-	ObstacleManager(std::vector<Entity>& platforms ,std::vector<Entity>& breakingPlats ,std::vector<Entity>& enemies) :
+	ObstacleManager(std::vector<Entity>& platforms ,std::vector<Entity>& breakingPlats ,std::vector<Entity>& enemies, CameraController& cam) :
 	platforms(platforms),
 	breakingPlats(breakingPlats),
-	enemies(enemies)
+	enemies(enemies),
+	cam(cam)
 	{
 		
 	}
@@ -33,6 +36,8 @@ private:
 	std::vector<Entity>& platforms;
 	std::vector<Entity>& breakingPlats;
 	std::vector<Entity>& enemies;
+
+	CameraController& cam;
 
 	TransformComponent* lastActivePlatform = nullptr;
 	//TransformComponent* lastActitiveBreakingPlat = nullptr;

@@ -14,8 +14,10 @@ namespace Tmpl8
 
 	Game::Game()
 	{
-		obMan = new ObstacleManager(platforms, BreakingPlatforms, enemies);
+		camera = new Camera();
+		cameraControl = new CameraController(camera);
 
+		obMan = new ObstacleManager(platforms, BreakingPlatforms, enemies ,*cameraControl);
 		buttons.push_back(new Button({ 110,299 }, new Surface("assets/doodle/play-btn.png")));
 
 		buttons.push_back(new Button({ 441,650 }, new Surface("assets/doodle/close.png")));
@@ -25,13 +27,11 @@ namespace Tmpl8
 		buttons[0]->SetActive(true);
 		buttons[1]->SetActive(true);
 
-		camera = new Camera();
-		cameraControl = new CameraController(camera);
 
 		player.AddComponent(new TransformComponent(cameraControl));
-		player.AddComponent(new PlayerComponent);
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 12));
 		player.AddComponent(new ColliderComponent(player));
+		player.AddComponent(new PlayerComponent);
 		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
 
 		vec2 storagePos{-100, -100 };
@@ -152,7 +152,6 @@ namespace Tmpl8
 		startMenuSprite.Draw(screen, startMenu.x, startMenu.y);
 		endScreenSprite.Draw(screen, endScreen.x, endScreen.y);
 
-
 		if (score >= 20000)
 		{
 			obMan->platformDensity = 7;
@@ -161,9 +160,9 @@ namespace Tmpl8
 		}
 		else if(score >= 10000)
 		{
-			obMan->platformDensity = 24;
-			obMan->maxPlatformDist = 200;
-			obMan->minPlatformDist = 150;
+			obMan->platformDensity = 7;
+			obMan->maxPlatformDist = 100;
+			obMan->minPlatformDist = 80;
 		}
 
 		if (restart)
@@ -180,15 +179,20 @@ namespace Tmpl8
 			CheckCollisions();
 		}
 
+
+
 		for (auto& b : buttons)
 		{
 			b->Render(screen);
 		}
 
+
+		screen->Box(cameraControl->GetPos().x, cameraControl->GetTop(), ScreenWidth, ScreenWidth, 0xff00);
+
 		
 		//camera bounds
-		score += Timer::Get().GetElapsedMilliseconds();
-		std::cout << score << std::endl;
+		//score += Timer::Get().GetElapsedMilliseconds();
+		//std::cout << score << std::endl;
 		if (gameActive)
 		{
 			obMan->Update();
@@ -220,7 +224,7 @@ namespace Tmpl8
 			SDL_PushEvent(&e);
 		}
 
-		if (player.GetComponent<TransformComponent>()->GetPosition().y + player.GetComponent<SpriteComponent>()->GetHeight() >= 800)
+		if (player.GetComponent<TransformComponent>()->GetScreenPos().y + player.GetComponent<SpriteComponent>()->GetHeight() >= ScreenHeight)
 		{
 			gameOver = true;
 		}
@@ -284,12 +288,6 @@ namespace Tmpl8
 		{
 			collision::CheckCol(player, e);
 		}
-
-		auto col = player.GetComponent<ColliderComponent>();
-		col->box.prevRight = col->box.right;
-		col->box.prevBottom = col->box.bottom;
-		col->box.prevLeft = col->box.left;
-		col->box.prevTop = col->box.top;
 
 	}
 
