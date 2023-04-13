@@ -17,7 +17,6 @@
  	RenderObject renderObject(transform->GetPosition(), sprite, &screen);
  	sprite.Draw(renderObject.dst, static_cast<int>(renderObject.pos.x),
  	static_cast<int>(renderObject.pos.y));
-
  }
 
 

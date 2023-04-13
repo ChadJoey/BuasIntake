@@ -67,7 +67,7 @@ void ObstacleManager::UpdatePlatForms()
 		{
 			platforms[i].SetActive(true);
 			auto* t = platforms[i].GetComponent<TransformComponent>();
-			MoveObstacle(platforms[i], { 0,lastActivePlatform->GetPosition().y - maxPlatformDist }, { ScreenWidth - 60 ,lastActivePlatform->GetPosition().y - minPlatformDist });
+			MoveObstacle(platforms[i], { 0,lastActivePlatform->GetScreenPos().y - minPlatformDist }, { ScreenWidth - 60 ,lastActivePlatform->GetScreenPos().y - maxPlatformDist });
 		}
 	}
 }

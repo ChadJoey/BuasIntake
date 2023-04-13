@@ -152,17 +152,19 @@ namespace Tmpl8
 		startMenuSprite.Draw(screen, startMenu.x, startMenu.y);
 		endScreenSprite.Draw(screen, endScreen.x, endScreen.y);
 
+		score = cameraControl->GetPos().y;
+
 		if (score >= 20000)
 		{
 			obMan->platformDensity = 7;
-			obMan->maxPlatformDist = 150;
-			obMan->minPlatformDist = 100;
-		}
-		else if(score >= 10000)
-		{
-			obMan->platformDensity = 7;
 			obMan->maxPlatformDist = 100;
-			obMan->minPlatformDist = 80;
+			obMan->minPlatformDist = 150;
+		}
+		else if(score >= 1000)
+		{
+			obMan->platformDensity = 15;
+			obMan->maxPlatformDist = 60;
+			obMan->minPlatformDist = 100;
 		}
 
 		if (restart)
@@ -186,8 +188,6 @@ namespace Tmpl8
 			b->Render(screen);
 		}
 
-
-		screen->Box(cameraControl->GetPos().x, cameraControl->GetTop(), ScreenWidth, ScreenWidth, 0xff00);
 
 		
 		//camera bounds

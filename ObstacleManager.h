@@ -30,7 +30,7 @@ public:
 	bool DecreaseCheck();
 	int platformDensity = 24;
 	float maxPlatformDist = 50;
-	float minPlatformDist = 50;
+	float minPlatformDist = 100;
 
 private:
 	std::vector<Entity>& platforms;
