@@ -13,7 +13,6 @@ public:
 		float top = 250;
 		float bottom = ScreenHeight;
 	}camBounds;
-	// cam is just a position loop trough it at the end in the transform update as a last call
 private:
 };
 

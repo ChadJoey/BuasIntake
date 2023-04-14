@@ -22,8 +22,6 @@ void collision::CheckSides(Entity& player, Entity& object)
 	auto p = player.GetComponent<PlayerComponent>();
 
 
-
-
 	if (rectA.prevBottom < rectB.top && rectA.bottom >= rectB.top)
 	{
 		//collision at the bottom of the player
@@ -36,38 +34,13 @@ void collision::CheckSides(Entity& player, Entity& object)
 			return;
 		}
 	}
-
-
-	if (rectA.prevTop > rectB.bottom && rectA.top <= rectB.bottom)
+	if (!object.GetComponent<Enemy>())
 	{
-		//collision at the top of the player
-		if (object.GetComponent<Enemy>())
-		{
-			p->Knockout();
-			return;
-		}
+
 	}
-
-
-	if (rectA.prevLeft > rectB.right && rectA.left <= rectB.right)
+	else
 	{
-		//collision at the left of the player
-		if (object.GetComponent<Enemy>())
-		{
-			p->Knockout();
-			return;
-		}
-	}
-
-
-	if (rectA.prevRight < rectB.left && rectA.right >= rectB.left)
-	{
-		//collision at the right of the player
-		if (object.GetComponent<Enemy>())
-		{
-			p->Knockout();
-			return;
-		}
+		p->Knockout();
 	}
 
 }

@@ -31,6 +31,7 @@ public:
 	int platformDensity = 24;
 	float maxPlatformDist = 50;
 	float minPlatformDist = 100;
+	TransformComponent* lastActivePlatform = nullptr;
 
 private:
 	std::vector<Entity>& platforms;
@@ -39,7 +40,6 @@ private:
 
 	CameraController& cam;
 
-	TransformComponent* lastActivePlatform = nullptr;
 	//TransformComponent* lastActitiveBreakingPlat = nullptr;
 
 	int breakingPlatDensity = 1;

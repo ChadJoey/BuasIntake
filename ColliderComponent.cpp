@@ -12,13 +12,14 @@ void ColliderComponent::SetOffset(float leftOffset, float bottomOffset, float to
 
 void ColliderComponent::Init(Entity& entity)
 {
+	auto* t = entity.GetComponent<TransformComponent>();
+	auto* s = entity.GetComponent<SpriteComponent>();
+	box.right = (t->GetPosition().x + s->GetWidth()) + box.rightOffset;
+	box.left = t->GetPosition().x + box.leftOffset;
+	box.bottom = (t->GetPosition().y + s->GetHeight()) + box.bottomOffset;
+	box.top = t->GetPosition().y + box.topOffset;
 }
 
-void ColliderComponent::SetVelocity(float vx, float vy)
-{
-	box.vx = vx;
-	box.vy = vy;
-}
 
 
 void ColliderComponent::Update(Entity& entity)
@@ -27,21 +28,15 @@ void ColliderComponent::Update(Entity& entity)
 	{
 		return;
 	}
-
-
-	auto* t = entity.GetComponent<TransformComponent>();
 	auto* s = entity.GetComponent<SpriteComponent>();
+	auto* t = entity.GetComponent<TransformComponent>();
 
 
-	if (entity.GetComponent<PlayerComponent>())
-	{
-		auto* player = entity.GetComponent<PlayerComponent>();
-		SetVelocity(player->velX, player->velY);
-	}
-	box.right = (t->GetPosition().x + s->GetWidth()) + box.rightOffset;
 	box.left = t->GetPosition().x + box.leftOffset;
-	box.bottom = (t->GetPosition().y + s->GetHeight()) + box.bottomOffset;
 	box.top = t->GetPosition().y + box.topOffset;
+	box.right = (t->GetPosition().x + s->GetWidth()) + box.rightOffset;
+	box.bottom = (t->GetPosition().y + s->GetHeight()) + box.bottomOffset;
+
 }
 
 void ColliderComponent::Render(Entity& entity, Tmpl8::Surface& screen)

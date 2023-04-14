@@ -26,22 +26,34 @@ void PlayerComponent::Update(Entity& entity)
 	col->box.prevLeft = col->box.left;
 	col->box.prevTop = col->box.top;
 
+	if (t->GetPosition().y <= t->cam->GetTop() && velY < 0)
+	{
+		t->cam->MoveCam(velY);
+	}
+
+	if (t->GetPosition().y >= ScreenHeight)
+	{
+		t->cam->MoveCam(velY);
+	}
+
 
 	visuals(entity);
 	Move();
 	Wrap(entity);
 
 
-	if (t->GetPosition().y <= t->cam->GetTop() && velY < 0)
-	{
-		t->cam->MoveCam(velY);
-	}
 	t->SetScreenPosition({ x, y });
+	col->Update(entity);
 }
 
 void PlayerComponent::Wrap(Entity& entity)
 {
 	auto* pc = entity.GetComponent<ColliderComponent>();
+	if (pc->box.right <= -1000)
+	{
+		return;
+	}
+
 	if (ScreenWidth <= pc->box.left)
 	{
 		x = -50;

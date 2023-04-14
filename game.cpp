@@ -85,9 +85,10 @@ namespace Tmpl8
 			breakingPlat.GetComponent<TransformComponent>()->SetPosition({ 350, 200 });
 		}
 
-
+		score = 0;
 		SetPlatforms(false);
 		platforms[0].SetActive(true);
+		platforms[0].GetComponent<TransformComponent>()->SetScreenPosition({ 40,650 });
 		startMenu = { 0,0 };
 		buttons[0]->SetActive(true);
 		buttons[1]->SetActive(true);
@@ -162,7 +163,7 @@ namespace Tmpl8
 		}
 		else if(score >= 1000)
 		{
-			obMan->platformDensity = 15;
+			obMan->platformDensity = 24;
 			obMan->maxPlatformDist = 60;
 			obMan->minPlatformDist = 100;
 		}
@@ -173,14 +174,9 @@ namespace Tmpl8
 			restart = false;
 		}
 
+
 		UpdateEntities();
 		RenderEntities();
-
-		if (!player.GetComponent<PlayerComponent>()->knockedOut)
-		{
-			CheckCollisions();
-		}
-
 
 
 		for (auto& b : buttons)
@@ -188,15 +184,6 @@ namespace Tmpl8
 			b->Render(screen);
 		}
 
-
-		
-		//camera bounds
-		//score += Timer::Get().GetElapsedMilliseconds();
-		//std::cout << score << std::endl;
-		if (gameActive)
-		{
-			obMan->Update();
-		}
 
 
 		if (gameStart)
@@ -213,9 +200,16 @@ namespace Tmpl8
 				player.GetComponent<PlayerComponent>()->canMove = true;
 				enemies[0].SetActive(true);
 				gameStart = false;
+				obMan->lastActivePlatform = platforms[0].GetComponent<TransformComponent>();
 				gameActive = true;
 			}
 		}
+
+		if (gameActive)
+		{
+			obMan->Update();
+		}
+
 
 		if (endGame)
 		{
@@ -239,6 +233,16 @@ namespace Tmpl8
 				bp.SetActive(false);
 			}
 		}
+
+
+
+		if (!player.GetComponent<PlayerComponent>()->knockedOut)
+		{
+			CheckCollisions();
+		}
+
+
+
 	}
 
 
@@ -247,7 +251,6 @@ namespace Tmpl8
 	{
 		if (endScreen.y >= -100)
 		{
-			cameraControl->SetPos({ 0, -800.0f * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
 			endScreen.y -= 800 * static_cast<float>(Timer::Get().GetElapsedSeconds());
 
 			for (auto& bp : BreakingPlatforms)
@@ -323,6 +326,8 @@ namespace Tmpl8
 
 	void Game:: UpdateEntities()
 	{
+		player.Update();
+
 		for (auto& p : platforms)
 		{
 			p.Update();
@@ -338,7 +343,7 @@ namespace Tmpl8
 			e.Update();
 		}
 
-		player.Update();
+		
 	}
 
 	//==============================================================================================

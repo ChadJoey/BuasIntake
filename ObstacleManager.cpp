@@ -19,7 +19,7 @@ void ObstacleManager::MoveObstacle(Entity& entity, Tmpl8::vec2 minpos, Tmpl8::ve
 	std::uniform_int_distribution<int>  genX(minpos.x, maxpos.x);
 	std::uniform_int_distribution<int>  genY(minpos.y, maxpos.y);
 	t->SetScreenPosition({ static_cast<float>(genX(generator)), static_cast<float>(genY(generator)) });
-	std::cout << t->GetScreenPos().y << std::endl;
+	//std::cout << t->GetScreenPos().y << std::endl;
 	lastActivePlatform = entity.GetComponent<TransformComponent>();
 }
 
