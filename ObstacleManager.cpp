@@ -19,28 +19,28 @@ void ObstacleManager::MoveObstacle(Entity& entity, Tmpl8::vec2 minpos, Tmpl8::ve
 	std::uniform_int_distribution<int>  genX(minpos.x, maxpos.x);
 	std::uniform_int_distribution<int>  genY(minpos.y, maxpos.y);
 	t->SetScreenPosition({ static_cast<float>(genX(generator)), static_cast<float>(genY(generator)) });
-	//std::cout << t->GetScreenPos().y << std::endl;
-	lastActivePlatform = entity.GetComponent<TransformComponent>();
+	lastActiveObject = entity.GetComponent<TransformComponent>();
 }
 
 void ObstacleManager::Update()
 {
-	UpdatePlatForms();
+	UpdateObjects();
 }
 
 
 
-void ObstacleManager::UpdatePlatForms()
+void ObstacleManager::UpdateObjects()
 {
-	if (lastActivePlatform == nullptr)
+	if (lastActiveObject == nullptr)
 	{
-		lastActivePlatform = platforms[0].GetComponent<TransformComponent>();
+		lastActiveObject = ObjectList[0].GetComponent<TransformComponent>();
 	}
 
 
-	for (auto& p : platforms)
+	for (auto& p : ObjectList)
 	{
-		//make sure to only check for active platforms
+		//make sure to only check for active ObjectList
+
 		if (!p.isActive)
 		{
 			continue;
@@ -48,26 +48,33 @@ void ObstacleManager::UpdatePlatForms()
 
 		auto* t = p.GetComponent<TransformComponent>();
 
-		//std::cout << ScreenHeight << std::endl;
-
-
 		if (t->GetPosition().y >= ScreenHeight)
 		{
-			std::cout << t->GetScreenPos().y << std::endl;
-			std::cout << t->cam->GetPos().y << std::endl;
-			MoveObstacle(p, { 0,lastActivePlatform->GetScreenPos().y - minPlatformDist }, { ScreenWidth - 60 ,lastActivePlatform->GetScreenPos().y - maxPlatformDist });
+			if (p.GetComponent<BreakingPlatform>())
+			{
+				p.GetComponent<BreakingPlatform>()->Reset();
+			}
+
+
+			MoveObstacle(p, { 0,lastActiveObject->GetScreenPos().y - minObjectDist }, { ScreenWidth - 60 ,lastActiveObject->GetScreenPos().y - maxObjectDist });
+		}
+		if (p.GetComponent<Enemy>() && p.GetComponent<Enemy>()->hit)
+		{
+			MoveObstacle(p, { 0,lastActiveObject->GetScreenPos().y - minObjectDist }, { ScreenWidth - 60 ,lastActiveObject->GetScreenPos().y - maxObjectDist });
+			p.GetComponent<Enemy>()->hit = false;
+			std::cout << t->GetPosition().y;
 		}
 	}
 
 
 	if (IncreaseCheck())
 	{
-		const int activeAmount = ActiveAmount(platforms);
-		for (size_t i = activeAmount; i <= platformDensity - 1; i++)
+		const int activeAmount = ActiveAmount(ObjectList);
+		for (size_t i = activeAmount; i <= ObjectDensity - 1; i++)
 		{
-			platforms[i].SetActive(true);
-			auto* t = platforms[i].GetComponent<TransformComponent>();
-			MoveObstacle(platforms[i], { 0,lastActivePlatform->GetScreenPos().y - minPlatformDist }, { ScreenWidth - 60 ,lastActivePlatform->GetScreenPos().y - maxPlatformDist });
+			ObjectList[i].SetActive(true);
+			auto* t = ObjectList[i].GetComponent<TransformComponent>();
+			MoveObstacle(ObjectList[i], { 0,lastActiveObject->GetScreenPos().y - minObjectDist }, { ScreenWidth - 60 ,lastActiveObject->GetScreenPos().y - maxObjectDist });
 		}
 	}
 }
@@ -90,8 +97,8 @@ int ObstacleManager::ActiveAmount(const std::vector<Entity>& listToCheck)
 
 bool ObstacleManager::IncreaseCheck()
 {
-	const int activeAmount = ActiveAmount(platforms);
-	if (activeAmount <= platformDensity)
+	const int activeAmount = ActiveAmount(ObjectList);
+	if (activeAmount <= ObjectDensity)
 	{
 		return true;
 	}
@@ -100,12 +107,19 @@ bool ObstacleManager::IncreaseCheck()
 
 bool ObstacleManager::DecreaseCheck()
 {
-	const int activeAmount = ActiveAmount(platforms);
-	if (activeAmount > platformDensity)
+	const int activeAmount = ActiveAmount(ObjectList);
+	if (activeAmount > ObjectDensity)
 	{
 		return true;
 	}
 	return false;
+}
+
+void ObstacleManager::SetParameters(int density, float min, float max)
+{
+	ObjectDensity = density;
+	maxObjectDist = max;
+	minObjectDist = min;
 }
 
 

@@ -5,7 +5,9 @@
 
 class Enemy : public Component
 {
-	void Update(Entity& entity) override;
+public:
+	virtual void Update(Entity& entity) override;
+	bool hit = false;
 private:
 	float time = 0;
 };

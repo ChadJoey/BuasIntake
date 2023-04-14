@@ -51,10 +51,14 @@ private:
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;
 	Surface* screen;
-	ObstacleManager* obMan = nullptr;
+	ObstacleManager* platformMan = nullptr;
+	ObstacleManager* enemyMan = nullptr;
+	ObstacleManager* breakingPlatMan = nullptr;
 
 	float score = 0;
 	int platformAmount = 25;
+	int breakingPlatformAmount = 5;
+	int enemyAmount = 3;
 	float platformSpeed = 300;
 	float time = 0;
 

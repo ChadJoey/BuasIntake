@@ -17,7 +17,15 @@ namespace Tmpl8
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
-		obMan = new ObstacleManager(platforms, BreakingPlatforms, enemies ,*cameraControl);
+		platformMan = new ObstacleManager(platforms);
+		platformMan->SetParameters(24, 50, 50);
+
+		enemyMan = new ObstacleManager(enemies);
+		enemyMan->SetParameters(3, 2000, 1000);
+
+		breakingPlatMan = new ObstacleManager(BreakingPlatforms);
+		breakingPlatMan->SetParameters(4, 300, 200);
+
 		buttons.push_back(new Button({ 110,299 }, new Surface("assets/doodle/play-btn.png")));
 
 		buttons.push_back(new Button({ 441,650 }, new Surface("assets/doodle/close.png")));
@@ -34,8 +42,6 @@ namespace Tmpl8
 		player.AddComponent(new PlayerComponent);
 		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
 
-		vec2 storagePos{-100, -100 };
-
 		for (size_t i = 0; i < platformAmount; i++)
 		{
 			Entity platform;
@@ -47,22 +53,31 @@ namespace Tmpl8
 			platforms.push_back(std::move(platform));
 		}
 		//make sprites shared
-		Entity breakingBad;
-		breakingBad.AddComponent(new TransformComponent(cameraControl));
-		breakingBad.GetComponent<TransformComponent>()->SetPosition({350, 200});
-		breakingBad.AddComponent(new SpriteComponent(new Surface("assets/doodle/breakingBad.png"), 4));
-		breakingBad.AddComponent(new ColliderComponent(breakingBad));
-		breakingBad.AddComponent(new BreakingPlatform());
-		BreakingPlatforms.push_back(std::move(breakingBad));
 
-		Entity enemy;
-		enemy.AddComponent(new TransformComponent(cameraControl));
-		enemy.GetComponent<TransformComponent>()->SetPosition({ 250,50 });
-		enemy.AddComponent(new SpriteComponent(new Surface("assets/doodle/Enemies.png"), 4));
-		enemy.AddComponent(new ColliderComponent(enemy));
-		enemy.AddComponent(new Enemy());
+		for (size_t i = 0; i < breakingPlatformAmount; i++)
+		{
+			Entity breakingBad;
+			breakingBad.AddComponent(new TransformComponent(cameraControl));
+			breakingBad.GetComponent<TransformComponent>()->SetPosition({ 350, 200 });
+			breakingBad.AddComponent(new SpriteComponent(new Surface("assets/doodle/breakingBad.png"), 4));
+			breakingBad.AddComponent(new ColliderComponent(breakingBad));
+			breakingBad.AddComponent(new BreakingPlatform());
+			BreakingPlatforms.push_back(std::move(breakingBad));
+		}
 
-		enemies.push_back(std::move(enemy));
+
+		for (size_t i = 0; i < enemyAmount; i++)
+		{
+			Entity enemy;
+			enemy.AddComponent(new TransformComponent(cameraControl));
+			enemy.GetComponent<TransformComponent>()->SetPosition({250 ,static_cast<float>(-1000 * i) });
+			enemy.AddComponent(new SpriteComponent(new Surface("assets/doodle/Enemies.png"), 4));
+			enemy.AddComponent(new ColliderComponent(enemy));
+			enemy.AddComponent(new Enemy());
+			enemy.SetActive(false);
+			enemies.push_back(std::move(enemy));
+		}
+
 
 		enemies[0].SetActive(false);
 		SetPlatforms(false);
@@ -157,15 +172,11 @@ namespace Tmpl8
 
 		if (score >= 20000)
 		{
-			obMan->platformDensity = 7;
-			obMan->maxPlatformDist = 100;
-			obMan->minPlatformDist = 150;
+			platformMan->SetParameters(7, 150, 100);
 		}
 		else if(score >= 1000)
 		{
-			obMan->platformDensity = 24;
-			obMan->maxPlatformDist = 60;
-			obMan->minPlatformDist = 100;
+			platformMan->SetParameters(24, 100, 60);
 		}
 
 		if (restart)
@@ -200,14 +211,18 @@ namespace Tmpl8
 				player.GetComponent<PlayerComponent>()->canMove = true;
 				enemies[0].SetActive(true);
 				gameStart = false;
-				obMan->lastActivePlatform = platforms[0].GetComponent<TransformComponent>();
+				platformMan->lastActiveObject = platforms[0].GetComponent<TransformComponent>();
+				enemyMan->lastActiveObject = enemies[0].GetComponent<TransformComponent>();
+				breakingPlatMan->lastActiveObject = BreakingPlatforms[0].GetComponent<TransformComponent>();
 				gameActive = true;
 			}
 		}
 
 		if (gameActive)
 		{
-			obMan->Update();
+			platformMan->Update();
+			enemyMan->Update();
+			breakingPlatMan->Update();
 		}
 
 
@@ -232,6 +247,10 @@ namespace Tmpl8
 			{
 				bp.SetActive(false);
 			}
+		}
+		else
+		{
+			endScreen.y = cameraControl->GetPos().y + ScreenHeight;
 		}
 
 
@@ -274,10 +293,6 @@ namespace Tmpl8
 	{
 		for (auto& p : platforms)
 		{
-			if (!p.isActive)
-			{
-				continue;
-			}
 			collision::CheckCol(player, p);
 		}
 
