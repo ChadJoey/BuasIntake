@@ -173,25 +173,8 @@ namespace Tmpl8
 		endScreenSprite.Draw(screen, endScreen.x, endScreen.y);
 
 		score = cameraControl->GetPos().y;
-		//if (score >= 3000)
-		//{
-		//	platformMan->SetParameters(24, 100, 60);
-		//}
-		//else if (score >= 2000)
-		//{
-		//	platformMan->SetParameters(7, 220, 200);
-		//	breakingPlatMan->SetParameters(0, 300, 200);
-		//}
-		//else if(score >= 1000)
-		//{
-		//	platformMan->SetParameters(24, 100, 60);
-		//}
-
-
 
 		const int levelProgress = static_cast<int>(score) % 2000;
-		std::cout << levelProgress << std::endl;
-
 		if (levelProgress >= 100)
 		{
 			hasLevelChanged = true;
@@ -281,15 +264,10 @@ namespace Tmpl8
 			endScreen.y = cameraControl->GetPos().y + ScreenHeight;
 		}
 
-
-
 		if (!player.GetComponent<PlayerComponent>()->knockedOut)
 		{
 			CheckCollisions();
 		}
-
-
-
 	}
 
 
@@ -319,6 +297,12 @@ namespace Tmpl8
 
 	void Game::CheckCollisions()
 	{
+
+		for (auto& e : enemies)
+		{
+			collision::CheckCol(player, e);
+		}
+
 		for (auto& p : platforms)
 		{
 			collision::CheckCol(player, p);
@@ -327,12 +311,6 @@ namespace Tmpl8
 		for (auto& bp : BreakingPlatforms)
 		{
 			collision::CheckCol(player, bp);
-		}
-
-
-		for (auto& e : enemies)
-		{
-			collision::CheckCol(player, e);
 		}
 
 	}
@@ -371,6 +349,12 @@ namespace Tmpl8
 	{
 		player.Update();
 
+
+		for (auto& e : enemies)
+		{
+			e.Update();
+		}
+
 		for (auto& p : platforms)
 		{
 			p.Update();
@@ -381,10 +365,7 @@ namespace Tmpl8
 			bp.Update();
 		}
 
-		for (auto& e : enemies)
-		{
-			e.Update();
-		}
+
 
 		
 	}
@@ -409,9 +390,6 @@ namespace Tmpl8
 			e.Render(*screen);
 		}
 
-
 		player.Render(*screen);
 	}
-
-
 };

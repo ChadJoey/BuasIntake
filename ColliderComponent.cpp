@@ -47,7 +47,12 @@ void ColliderComponent::Render(Entity& entity, Tmpl8::Surface& screen)
 	}
 	auto* transform = entity.GetComponent<TransformComponent>();
 	auto* sprite = entity.GetComponent<SpriteComponent>();
+#ifdef _DEBUG
+	{
 	screen.Box(box.left, box.top,box.right,box.bottom, 0xff);
+	}
+#endif
+
 
 }
 

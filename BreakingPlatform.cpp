@@ -34,8 +34,6 @@ void BreakingPlatform::Update(Entity& entity)
 	{
 		s->SetFrame(0);
 	}
-
-
 }
 
 

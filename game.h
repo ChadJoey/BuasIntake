@@ -104,9 +104,9 @@ private:
 
 	bool hasLevelChanged = false;
 
-	GenerationData level1{20,50,50, 3, 2000, 1050, 4, 300, 200};
-	GenerationData level2{20,130,100, 3,2000,1050, 4, 300, 200};
-	GenerationData level3{20,220,200, 3,2000,1050, 0, 300, 200};
-	GenerationData level4{20,70,50, 3, 2000, 1050, 4, 300, 200};
+	GenerationData level1{20,50,50, 3, 2000, 1000, 4, 300, 200};
+	GenerationData level2{20,130,100, 3,2000,1000, 4, 300, 200};
+	GenerationData level3{20,220,200, 3,2000,1000, 0, 300, 200};
+	GenerationData level4{20,70,50, 3, 2000, 1000, 4, 300, 200};
 };
 }; // namespace Tmpl8
