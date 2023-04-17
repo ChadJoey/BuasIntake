@@ -12,6 +12,15 @@
 namespace Tmpl8
 {
 
+
+	/*feedback so dont forgetty
+	 * moving platforms
+	 * enemy only stage
+	 * sound
+	 * tweak collision box
+	 * make end follow camera
+	 */
+
 	Game::Game()
 	{
 		camera = new Camera();
@@ -174,13 +183,13 @@ namespace Tmpl8
 
 		score = cameraControl->GetPos().y;
 
-		const int levelProgress = static_cast<int>(score) % 2000;
+		const int levelProgress = static_cast<int>(score) % 3000;
 		if (levelProgress >= 100)
 		{
 			hasLevelChanged = true;
 		}
 
-		if (levelProgress >= 1999 && hasLevelChanged)
+		if (levelProgress >= 2900 && hasLevelChanged)
 		{
 			level = ++level % levels.size();
 			platformMan->SetParameters(levels[level]->platformDensity, levels[level]->platformMin, levels[level]->platformMax);
@@ -188,6 +197,7 @@ namespace Tmpl8
 			breakingPlatMan->SetParameters(levels[level]->brDensity, levels[level]->brMin, levels[level]->brMax);
 			hasLevelChanged = true;
 		}
+
 
 
 		if (restart)
