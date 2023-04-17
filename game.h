@@ -48,6 +48,22 @@ public:
 	void KeyDown(SDL_Scancode key);
 
 private:
+	//storage container for easy switching between generation styles
+	struct GenerationData
+	{
+		int platformDensity;
+		float platformMin;
+		float platformMax;
+
+		int enemyDensity;
+		float enemyMin;
+		float enemyMax;
+
+		int brDensity;
+		float brMin;
+		float brMax;
+	};
+
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;
 	Surface* screen;
@@ -69,6 +85,8 @@ private:
 	std::vector<Entity> enemies;
 	std::vector<Button*> buttons;
 
+	std::vector<GenerationData*> levels;
+
 	bool gameStart = false;
 	bool gameActive = false;
 	bool gameOver = false;
@@ -80,5 +98,15 @@ private:
 
 	UiPos startMenu = {0,0};
 	UiPos endScreen = { 0,0 };
+
+
+	int level = 0;
+
+	bool hasLevelChanged = false;
+
+	GenerationData level1{20,50,50, 3, 2000, 1050, 4, 300, 200};
+	GenerationData level2{20,130,100, 3,2000,1050, 4, 300, 200};
+	GenerationData level3{20,220,200, 3,2000,1050, 0, 300, 200};
+	GenerationData level4{20,70,50, 3, 2000, 1050, 4, 300, 200};
 };
 }; // namespace Tmpl8

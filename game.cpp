@@ -17,14 +17,18 @@ namespace Tmpl8
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
+		levels.push_back(&level1);
+		levels.push_back(&level2);
+		levels.push_back(&level3);
+
 		platformMan = new ObstacleManager(platforms);
-		platformMan->SetParameters(24, 50, 50);
+		platformMan->SetParameters(level1.platformDensity, level1.platformMin, level1.platformMax);
 
 		enemyMan = new ObstacleManager(enemies);
-		enemyMan->SetParameters(3, 2000, 1000);
+		enemyMan->SetParameters(level1.enemyDensity, level1.enemyMin, level1.enemyMax);
 
 		breakingPlatMan = new ObstacleManager(BreakingPlatforms);
-		breakingPlatMan->SetParameters(4, 300, 200);
+		breakingPlatMan->SetParameters(level1.brDensity, level1.brMin, level1.brMax);
 
 		buttons.push_back(new Button({ 110,299 }, new Surface("assets/doodle/play-btn.png")));
 
@@ -169,15 +173,39 @@ namespace Tmpl8
 		endScreenSprite.Draw(screen, endScreen.x, endScreen.y);
 
 		score = cameraControl->GetPos().y;
+		//if (score >= 3000)
+		//{
+		//	platformMan->SetParameters(24, 100, 60);
+		//}
+		//else if (score >= 2000)
+		//{
+		//	platformMan->SetParameters(7, 220, 200);
+		//	breakingPlatMan->SetParameters(0, 300, 200);
+		//}
+		//else if(score >= 1000)
+		//{
+		//	platformMan->SetParameters(24, 100, 60);
+		//}
 
-		if (score >= 20000)
+
+
+		const int levelProgress = static_cast<int>(score) % 2000;
+		std::cout << levelProgress << std::endl;
+
+		if (levelProgress >= 100)
 		{
-			platformMan->SetParameters(7, 150, 100);
+			hasLevelChanged = true;
 		}
-		else if(score >= 1000)
+
+		if (levelProgress >= 1999 && hasLevelChanged)
 		{
-			platformMan->SetParameters(24, 100, 60);
+			level = ++level % levels.size();
+			platformMan->SetParameters(levels[level]->platformDensity, levels[level]->platformMin, levels[level]->platformMax);
+			enemyMan->SetParameters(levels[level]->enemyDensity, levels[level]->enemyMin, levels[level]->enemyMax);
+			breakingPlatMan->SetParameters(levels[level]->brDensity, levels[level]->brMin, levels[level]->brMax);
+			hasLevelChanged = true;
 		}
+
 
 		if (restart)
 		{

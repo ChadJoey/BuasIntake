@@ -18,7 +18,15 @@ void ObstacleManager::MoveObstacle(Entity& entity, Tmpl8::vec2 minpos, Tmpl8::ve
 	std::mt19937                        generator(rand_dev());
 	std::uniform_int_distribution<int>  genX(minpos.x, maxpos.x);
 	std::uniform_int_distribution<int>  genY(minpos.y, maxpos.y);
-	t->SetScreenPosition({ static_cast<float>(genX(generator)), static_cast<float>(genY(generator)) });
+	float y = static_cast<float>(genY(generator));
+	if (entity.GetComponent<BreakingPlatform>())
+	{
+		if (y >= 0)
+		{
+			y = -50;
+		}
+	}
+	t->SetScreenPosition({ static_cast<float>(genX(generator)), y });
 	lastActiveObject = entity.GetComponent<TransformComponent>();
 }
 
@@ -41,10 +49,17 @@ void ObstacleManager::UpdateObjects()
 	{
 		//make sure to only check for active ObjectList
 
+		if (ObjectDensity == 0)
+		{
+			return;
+		}
+
 		if (!p.isActive)
 		{
 			continue;
 		}
+
+
 
 		auto* t = p.GetComponent<TransformComponent>();
 
@@ -55,14 +70,12 @@ void ObstacleManager::UpdateObjects()
 				p.GetComponent<BreakingPlatform>()->Reset();
 			}
 
-
 			MoveObstacle(p, { 0,lastActiveObject->GetScreenPos().y - minObjectDist }, { ScreenWidth - 60 ,lastActiveObject->GetScreenPos().y - maxObjectDist });
 		}
 		if (p.GetComponent<Enemy>() && p.GetComponent<Enemy>()->hit)
 		{
 			MoveObstacle(p, { 0,lastActiveObject->GetScreenPos().y - minObjectDist }, { ScreenWidth - 60 ,lastActiveObject->GetScreenPos().y - maxObjectDist });
 			p.GetComponent<Enemy>()->hit = false;
-			std::cout << t->GetPosition().y;
 		}
 	}
 
