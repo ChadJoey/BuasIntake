@@ -18,6 +18,8 @@ namespace Tmpl8
 	 * enemy only stage
 	 * sound
 	 * tweak collision box
+	 *
+	 *
 	 * make end follow camera
 	 */
 
@@ -254,7 +256,10 @@ namespace Tmpl8
 			SDL_PushEvent(&e);
 		}
 
-		if (player.GetComponent<TransformComponent>()->GetScreenPos().y + player.GetComponent<SpriteComponent>()->GetHeight() >= ScreenHeight)
+		std::cout << endScreen.y << std::endl;
+
+
+		if (player.GetComponent<TransformComponent>()->GetPosition().y >= ScreenHeight)
 		{
 			gameOver = true;
 		}
@@ -271,7 +276,7 @@ namespace Tmpl8
 		}
 		else
 		{
-			endScreen.y = cameraControl->GetPos().y + ScreenHeight;
+			endScreen.y = 800;
 		}
 
 		if (!player.GetComponent<PlayerComponent>()->knockedOut)

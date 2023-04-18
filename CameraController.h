@@ -35,10 +35,15 @@ public:
 
 	void MoveCam(float speed)
 	{
+		if (!canCamMove)
+		{
+			return;
+		}
 		AddPos({ 0, -speed * static_cast<float>(Timer::Get().GetElapsedSeconds()) });
 	}
 
 private:
 	Camera* cam;
+	bool canCamMove = true;
 };
 
