@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "Button.h" 
 #include "SDL_scancode.h"
+#include "Audio/Sound.hpp"
 
 
 namespace Tmpl8 {
@@ -63,6 +64,8 @@ private:
 		float brMin;
 		float brMax;
 	};
+
+	Audio::Sound coin{ "mario-coin-sound.mp3", Audio::Sound::Type::Sound };
 
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;

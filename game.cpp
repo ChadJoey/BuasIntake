@@ -25,6 +25,9 @@ namespace Tmpl8
 
 	Game::Game()
 	{
+
+		
+
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
@@ -100,6 +103,8 @@ namespace Tmpl8
 		platforms[0].GetComponent<TransformComponent>()->SetPosition({ 40, 650 });
 
 		endScreen = { 0, 800 };
+
+
 	}
 
 	void Game::ResetGame()
@@ -148,6 +153,9 @@ namespace Tmpl8
 		buttons[0]->OnClick(gameStart);
 		buttons[1]->OnClick(endGame);
 		buttons[2]->OnClick(restart);
+
+		coin.play();
+
 	}
 
 	void Game::MouseDown(int button)
