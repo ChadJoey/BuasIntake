@@ -6,6 +6,7 @@ void Enemy::Update(Entity& entity)
 	{
 		return;
 	}
+
 	time += Timer::Get().GetElapsedSeconds();
 
 	auto* s = entity.GetComponent<SpriteComponent>();

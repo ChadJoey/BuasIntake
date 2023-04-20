@@ -28,13 +28,11 @@ void collision::CheckSides(Entity& player, Entity& object)
 
 	if (rectA.prevBottom < rectB.top && rectA.bottom >= rectB.top)
 	{
-
 		if (object.GetComponent<BreakingPlatform>())
 		{
 			object.GetComponent<BreakingPlatform>()->playAnim = true;
 			return;
 		}
-
 
 
 		//collision at the bottom of the player
@@ -43,11 +41,16 @@ void collision::CheckSides(Entity& player, Entity& object)
 			auto* t = player.GetComponent<TransformComponent>();
 			auto* ot = object.GetComponent<TransformComponent>();
 			t->SetScreenPosition({ t->GetScreenPos().x, ot->GetScreenPos().y});
-			p->flipVelocity();
 
 			if (object.GetComponent<Enemy>())
 			{
+				p->flipVelocity(false);
 				object.GetComponent<Enemy>()->hit = true;
+				object.GetComponent<Enemy>()->sound->enemyHit.play();
+			}
+			else
+			{
+				p->flipVelocity(true);
 			}
 			return;
 		}
@@ -63,6 +66,7 @@ void collision::CheckSides(Entity& player, Entity& object)
 	else if(!object.GetComponent<Enemy>()->hit)
 	{
 		p->Knockout();
+		p->sound.playerHit.play();
 	}
 
 }

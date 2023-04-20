@@ -3,17 +3,15 @@
 #include <vector>
 #include "Entity.h"
 #include "PlayerComponent.h"
-#include "TransformComponent.h"
-#include "ColliderComponent.h"
-#include "SpriteComponent.h"
-#include "PlatformComponent.h"
 #include "CameraController.h"
 #include "BreakingPlatform.h"
 #include "ObstacleManager.h"
 #include "Enemy.h"
 #include "Button.h" 
 #include "SDL_scancode.h"
-#include "Audio/Sound.hpp"
+#include "collision.h"
+#include "Timer.h"
+#include "SDL.h"
 
 
 namespace Tmpl8 {
@@ -65,7 +63,7 @@ private:
 		float brMax;
 	};
 
-	Audio::Sound coin{ "mario-coin-sound.mp3", Audio::Sound::Type::Sound };
+	
 
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;
@@ -73,6 +71,7 @@ private:
 	ObstacleManager* platformMan = nullptr;
 	ObstacleManager* enemyMan = nullptr;
 	ObstacleManager* breakingPlatMan = nullptr;
+	sounds* sound = nullptr;
 
 	float score = 0;
 	int platformAmount = 25;
@@ -95,7 +94,7 @@ private:
 	bool gameOver = false;
 	bool restart = false;
 	bool endGame = false;
-
+	bool canPlayFallSound = true;
 
 	using UiPos = Tmpl8::vec2;
 

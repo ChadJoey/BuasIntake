@@ -37,6 +37,7 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ObstacleManager.cpp" />
+    <ClCompile Include="sounds.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -75,6 +76,7 @@
     </ClInclude>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="ObstacleManager.h" />
+    <ClInclude Include="sounds.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">

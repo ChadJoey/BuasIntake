@@ -237,6 +237,7 @@
     <ClCompile Include="ObstacleManager.cpp" />
     <ClCompile Include="PlatformComponent.cpp" />
     <ClCompile Include="PlayerComponent.cpp" />
+    <ClCompile Include="sounds.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="template.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="ObstacleManager.h" />
     <ClInclude Include="PlatformComponent.h" />
     <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="sounds.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="template.h" />

@@ -1,5 +1,6 @@
 #include "ColliderComponent.h"
-#include <iostream>
+
+
 
 
 void ColliderComponent::SetOffset(float leftOffset, float bottomOffset, float topOffset, float rightOffset)

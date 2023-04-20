@@ -6,8 +6,8 @@
 
 
 
-PlayerComponent::PlayerComponent() :
- timer(Timer::Get())
+PlayerComponent::PlayerComponent(sounds* sound) :
+ timer(Timer::Get()), sound(*sound)
 {
 }
 
@@ -113,8 +113,12 @@ void PlayerComponent::KeyUp(Entity& entity, SDL_Scancode key)
 	}
 }
 
-void PlayerComponent::flipVelocity()
+void PlayerComponent::flipVelocity(bool playSound)
 {
+	if (playSound)
+	{
+		sound.jump.play();
+	}
 	velY = maxVelY;
 }
 

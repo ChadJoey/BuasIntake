@@ -19,6 +19,11 @@ void BreakingPlatform::Update(Entity& entity)
 
 	if (playAnim)
 	{
+		if (canPlaySound)
+		{
+			sound->breakingPlat.play();
+			canPlaySound = false;
+		}
 		t->AddPosition({0, velY * static_cast<float>(Timer::Get().GetElapsedSeconds())});
 		time += Timer::Get().GetElapsedSeconds();
 		if (time < 0.2f)
@@ -41,4 +46,5 @@ void BreakingPlatform::Reset()
 {
 	playAnim = false;
 	time = 0;
+	canPlaySound = true;
 }

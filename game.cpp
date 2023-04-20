@@ -1,9 +1,5 @@
 #include "game.h"
 #include "surface.h"
-#include "collision.h"
-#include "Timer.h";
-#include <iostream>
-#include "SDL.h"
 #include <cstdio> //printf
 
 
@@ -44,6 +40,9 @@ namespace Tmpl8
 		breakingPlatMan = new ObstacleManager(BreakingPlatforms);
 		breakingPlatMan->SetParameters(level1.brDensity, level1.brMin, level1.brMax);
 
+		sound = new sounds();
+
+
 		buttons.push_back(new Button({ 110,299 }, new Surface("assets/doodle/play-btn.png")));
 
 		buttons.push_back(new Button({ 441,650 }, new Surface("assets/doodle/close.png")));
@@ -57,7 +56,7 @@ namespace Tmpl8
 		player.AddComponent(new TransformComponent(cameraControl));
 		player.AddComponent(new SpriteComponent(new Surface("assets/doodle/space-doodles.png"), 12));
 		player.AddComponent(new ColliderComponent(player));
-		player.AddComponent(new PlayerComponent);
+		player.AddComponent(new PlayerComponent(sound));
 		player.GetComponent<ColliderComponent>()->SetOffset(10, 5, 10, -10);
 
 		for (size_t i = 0; i < platformAmount; i++)
@@ -79,7 +78,7 @@ namespace Tmpl8
 			breakingBad.GetComponent<TransformComponent>()->SetPosition({ 350, 200 });
 			breakingBad.AddComponent(new SpriteComponent(new Surface("assets/doodle/breakingBad.png"), 4));
 			breakingBad.AddComponent(new ColliderComponent(breakingBad));
-			breakingBad.AddComponent(new BreakingPlatform());
+			breakingBad.AddComponent(new BreakingPlatform(sound));
 			BreakingPlatforms.push_back(std::move(breakingBad));
 		}
 
@@ -91,7 +90,7 @@ namespace Tmpl8
 			enemy.GetComponent<TransformComponent>()->SetPosition({250 ,static_cast<float>(-1000 * i) });
 			enemy.AddComponent(new SpriteComponent(new Surface("assets/doodle/Enemies.png"), 4));
 			enemy.AddComponent(new ColliderComponent(enemy));
-			enemy.AddComponent(new Enemy());
+			enemy.AddComponent(new Enemy(sound));
 			enemy.SetActive(false);
 			enemies.push_back(std::move(enemy));
 		}
@@ -103,14 +102,13 @@ namespace Tmpl8
 		platforms[0].GetComponent<TransformComponent>()->SetPosition({ 40, 650 });
 
 		endScreen = { 0, 800 };
-
-
 	}
 
 	void Game::ResetGame()
 	{
 		gameStart = false;
 		gameOver = false;
+		canPlayFallSound = true;
 		cameraControl->reset();
 		player.GetComponent<PlayerComponent>()->Reset();
 
@@ -149,12 +147,10 @@ namespace Tmpl8
 	{
 		player.MouseUp(button);
 
-
 		buttons[0]->OnClick(gameStart);
 		buttons[1]->OnClick(endGame);
 		buttons[2]->OnClick(restart);
 
-		coin.play();
 
 	}
 
@@ -264,8 +260,6 @@ namespace Tmpl8
 			SDL_PushEvent(&e);
 		}
 
-		std::cout << endScreen.y << std::endl;
-
 
 		if (player.GetComponent<TransformComponent>()->GetPosition().y >= ScreenHeight)
 		{
@@ -274,6 +268,11 @@ namespace Tmpl8
 
 		if (gameOver)
 		{
+			if (canPlayFallSound)
+			{
+				sound->fall.play();
+				canPlayFallSound = false;
+			}
 			gameActive = false;
 			MoveToEndScreen();
 
@@ -312,7 +311,7 @@ namespace Tmpl8
 		}
 		else
 		{
-			player.GetComponent<SpriteComponent>()->SetFrame(0);
+			//player.GetComponent<SpriteComponent>()->SetFrame(0);
 		}
 	}
 

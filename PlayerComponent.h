@@ -5,11 +5,12 @@
 #include "SpriteComponent.h"
 #include "ColliderComponent.h"
 #include "Timer.h"
+#include "sounds.h"
 
 class PlayerComponent : public Component
 {
 public:
-	PlayerComponent();
+	PlayerComponent(sounds* sound);
 
 	void Update(Entity& entity) override;
 
@@ -25,7 +26,7 @@ public:
 
 	void Wrap(Entity& entity);
 
-	void flipVelocity();
+	void flipVelocity(bool playSound);
 	void visuals(Entity& entity);
 	void Move();
 	void Knockout();
@@ -51,6 +52,7 @@ public:
 	bool knockedOut = false;
 	bool facingRight = false;
 
+	sounds& sound;
 protected:
 
 
