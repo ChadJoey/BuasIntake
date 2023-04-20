@@ -12,11 +12,7 @@ namespace Tmpl8
 	/*feedback so dont forgetty
 	 * moving platforms
 	 * enemy only stage
-	 * sound
 	 * tweak collision box
-	 *
-	 *
-	 * make end follow camera
 	 */
 
 	Game::Game()
