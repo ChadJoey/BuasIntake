@@ -17,9 +17,6 @@ namespace Tmpl8
 
 	Game::Game()
 	{
-
-		
-
 		camera = new Camera();
 		cameraControl = new CameraController(camera);
 
