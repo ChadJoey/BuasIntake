@@ -111,6 +111,11 @@ namespace Tmpl8
 			breakingPlat.GetComponent<TransformComponent>()->SetPosition({ 350, 200 });
 		}
 
+		for (auto& e : enemies)
+		{
+			e.SetActive(false);
+		}
+
 		score = 0;
 		SetPlatforms(false);
 		platforms[0].SetActive(true);

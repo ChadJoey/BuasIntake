@@ -15,7 +15,6 @@
 
 
 namespace Tmpl8 {
-
 class Surface;
 class Game
 {
@@ -24,11 +23,10 @@ public:
 	~Game();
 	Game(const Game& copy) = delete;
 	Game& operator=(const Game& copy) = delete;
-
-	void ResetGame();
-
 	Game(Game&& copy) = delete;
 	Game& operator=(Game&& copy) = delete;
+
+	void ResetGame();
 
 	void SetTarget(Surface* surface) { screen = surface; };
 	void Init();
@@ -63,8 +61,6 @@ private:
 		float brMax;
 	};
 
-	
-
 	Camera* camera = nullptr;
 	CameraController* cameraControl = nullptr;
 	Surface* screen;
@@ -86,7 +82,6 @@ private:
 	std::vector<Entity> BreakingPlatforms;
 	std::vector<Entity> enemies;
 	std::vector<Button*> buttons;
-
 	std::vector<GenerationData*> levels;
 
 	bool gameStart = false;
@@ -101,12 +96,11 @@ private:
 	UiPos startMenu = {0,0};
 	UiPos endScreen = { 0,0 };
 
-
 	int level = 0;
 
 	bool hasLevelChanged = false;
 
-	GenerationData level1{20,50,50, 3, 2000, 1000, 4, 300, 200};
+	GenerationData level1{20,50,50, 3, 2000, 1500, 4, 300, 200};
 	GenerationData level2{20,130,100, 3,2000,1000, 4, 300, 200};
 	GenerationData level3{20,220,200, 3,2000,1000, 4, 1200, 1000};
 	GenerationData level4{20,70,50, 3, 2000, 1000, 4, 300, 200};

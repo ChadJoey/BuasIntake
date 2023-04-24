@@ -1,15 +1,16 @@
 #include "ObstacleManager.h"
-
-#include <iostream>
 #include <random>
 
 
 
 void ObstacleManager::MoveObstacle(Entity& entity, Tmpl8::vec2 minpos, Tmpl8::vec2 maxpos)
 {
+	//disable last active?
+	//then set to new active
 	if (DecreaseCheck())
 	{
 		entity.SetActive(false);
+		lastActiveObject = entity.GetComponent<TransformComponent>();
 		return;
 	}
 
@@ -44,22 +45,17 @@ void ObstacleManager::UpdateObjects()
 		lastActiveObject = ObjectList[0].GetComponent<TransformComponent>();
 	}
 
-
 	for (auto& p : ObjectList)
 	{
 		//make sure to only check for active ObjectList
-
 		if (ObjectDensity == 0)
 		{
 			return;
 		}
-
 		if (!p.isActive)
 		{
 			continue;
 		}
-
-
 
 		auto* t = p.GetComponent<TransformComponent>();
 
@@ -69,7 +65,6 @@ void ObstacleManager::UpdateObjects()
 			{
 				p.GetComponent<BreakingPlatform>()->Reset();
 			}
-
 			MoveObstacle(p, { 0,lastActiveObject->GetScreenPos().y - minObjectDist }, { ScreenWidth - 60 ,lastActiveObject->GetScreenPos().y - maxObjectDist });
 		}
 		if (p.GetComponent<Enemy>() && p.GetComponent<Enemy>()->hit)

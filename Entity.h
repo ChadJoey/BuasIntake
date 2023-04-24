@@ -35,22 +35,18 @@ public:
 	template<typename T>
 	T* GetComponent() const;
 
-
 	void SetActive(bool isActive)
 	{
 		this->isActive = isActive;
 	}
-
 
 	template<typename T>
 	std::vector<T*> GetComponents() const;
 
 	virtual void Init();
 
-
 	//Update the component
 	void Update();
-
 
 	//render the component
 	void Render(Tmpl8::Surface& screen);
@@ -69,7 +65,6 @@ public:
 
 	//mouse button is released
 	void MouseUp(int button);
-
 
 	bool isActive = true;
 protected:
