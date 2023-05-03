@@ -46,22 +46,26 @@ public:
 
 
 
-	virtual void Update(Entity& entity) override;
+	void Update(Entity& entity) override;
 
+	//renders sprite
 	void Render(Entity& entity, Tmpl8::Surface& screen) override;
 
-
+	//set the frame for this entities sprites
 	void SetFrame(unsigned int a_Index);
 
+	//returns this entities sprite frame
 	unsigned int GetFrame()
 	{
 		return sprite.GetFrame();
 	}
 
+	//returns sprite width
 	int GetWidth();
-
+	//returns sprite height
 	int GetHeight();
 
+	//returns pixel
 	Pixel* GetBuffer();
 
 protected:

@@ -11,7 +11,9 @@ public:
 	{
 		
 	}
+	//updates the breaking platforms behaviour
 	void Update(Entity& entity) override;
+	//reset the state for the platform
 	void Reset();
 	bool playAnim = false;
 private:

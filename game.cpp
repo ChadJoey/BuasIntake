@@ -8,13 +8,6 @@
 namespace Tmpl8
 {
 
-
-	/*feedback so dont forgetty
-	 * moving platforms
-	 * enemy only stage
-	 * tweak collision box
-	 */
-
 	Game::Game()
 	{
 		camera = new Camera();

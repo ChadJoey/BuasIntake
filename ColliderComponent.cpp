@@ -37,7 +37,6 @@ void ColliderComponent::Update(Entity& entity)
 	box.top = t->GetPosition().y + box.topOffset;
 	box.right = (t->GetPosition().x + s->GetWidth()) + box.rightOffset;
 	box.bottom = (t->GetPosition().y + s->GetHeight()) + box.bottomOffset;
-
 }
 
 void ColliderComponent::Render(Entity& entity, Tmpl8::Surface& screen)

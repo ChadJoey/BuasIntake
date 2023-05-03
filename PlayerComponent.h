@@ -12,10 +12,11 @@ class PlayerComponent : public Component
 public:
 	PlayerComponent(sounds* sound);
 
+	//updates player component
 	void Update(Entity& entity) override;
 
 
-	void Render(Entity& entity, Tmpl8::Surface& screen) override {};
+	void Render(Entity& entity, Tmpl8::Surface& screen) override {}
 
 	// a key is pressed
 	void KeyDown(Entity& entity, SDL_Scancode key) override;
@@ -23,13 +24,19 @@ public:
 	//a key is let go
 	 void KeyUp(Entity& entity, SDL_Scancode key) override;
 
-
+	 //wraps player when leaving either side
 	void Wrap(Entity& entity);
 
+	//reverses players Y velocity
 	void flipVelocity(bool playSound);
+	//handles animation frames
 	void visuals(Entity& entity);
+	//handles player physics 
 	void Move();
+	//handles knocked out state
 	void Knockout();
+
+	//resets player conditions
 	void Reset()
 	{
 		velX = 0;

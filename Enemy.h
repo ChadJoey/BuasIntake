@@ -10,8 +10,8 @@ public:
 	Enemy(sounds* sound) :
 	sound(sound)
 	{}
-
-	virtual void Update(Entity& entity) override;
+	//updates enemies animations
+	void Update(Entity& entity) override;
 	bool hit = false;
 	sounds* sound;
 private:
