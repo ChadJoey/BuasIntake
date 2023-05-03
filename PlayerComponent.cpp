@@ -142,33 +142,34 @@ void PlayerComponent::visuals(Entity& entity)
 	}
 
 
+	sprite->SetFrame(frame);
 	if (sprite->GetFrame() == 4 && velY == maxVelY)
 	{
-		sprite->SetFrame(5);
+		frame = 5;
 
 	}
 	else if (sprite->GetFrame() == 5 && velY >= -210)
 	{
-		sprite->SetFrame(4);
+		frame = 4;
 	}
 
 	if (sprite->GetFrame() == 0 && velY == maxVelY)
 	{
-		sprite->SetFrame(1);
+		frame = 1;
 	}
 	else if (sprite->GetFrame() == 1 && velY >= -210)
 	{
-		sprite->SetFrame(0);
+		frame = 0;
 	}
 
 
 	if (right)
 	{
-		sprite->SetFrame(4);
+		frame = 4;
 	}
 	if (left)
 	{
-		sprite->SetFrame(0);
+		frame = 0;
 	}
 }
 

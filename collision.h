@@ -2,7 +2,7 @@
 #include "ColliderComponent.h"
 #include "BreakingPlatform.h"
 #include "Enemy.h"
-#include "Audio/Sound.hpp"
+#include "Sound.hpp"
 class collision
 {
 public:

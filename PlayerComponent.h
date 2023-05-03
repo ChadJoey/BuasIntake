@@ -18,10 +18,10 @@ public:
 	void Render(Entity& entity, Tmpl8::Surface& screen) override {};
 
 	// a key is pressed
-	virtual void KeyDown(Entity& entity, SDL_Scancode key) override;
+	void KeyDown(Entity& entity, SDL_Scancode key) override;
 
 	//a key is let go
-	virtual void KeyUp(Entity& entity, SDL_Scancode key) override;
+	 void KeyUp(Entity& entity, SDL_Scancode key) override;
 
 
 	void Wrap(Entity& entity);
@@ -30,7 +30,6 @@ public:
 	void visuals(Entity& entity);
 	void Move();
 	void Knockout();
-
 	void Reset()
 	{
 		velX = 0;
@@ -43,7 +42,7 @@ public:
 		knockedOut = false;
 	}
 
-
+	int frame = 0;
 	float velY = 0.0f;
 	float yOffset = 0.0f;
 	float y = 300;

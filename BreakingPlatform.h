@@ -1,7 +1,7 @@
 #pragma once
 #include "PlatformComponent.h"
 #include "SpriteComponent.h"
-#include "Audio/Sound.hpp"
+#include "Sound.hpp"
 
 class BreakingPlatform : public Component
 {

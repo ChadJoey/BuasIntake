@@ -117,6 +117,7 @@ namespace Tmpl8
 		}
 
 		score = 0;
+		level = 0;
 		SetPlatforms(false);
 		platforms[0].SetActive(true);
 		platforms[0].GetComponent<TransformComponent>()->SetScreenPosition({ 40,650 });
