@@ -88,8 +88,6 @@ void ObstacleManager::UpdateObjects()
 }
 
 
-
-
 int ObstacleManager::ActiveAmount(const std::vector<Entity>& listToCheck)
 {
 	int activeAmount = 0;
